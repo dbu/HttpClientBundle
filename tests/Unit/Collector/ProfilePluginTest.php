@@ -17,13 +17,14 @@ use Http\Message\Formatter\SimpleFormatter;
 use Http\Promise\FulfilledPromise;
 use Http\Promise\Promise;
 use Http\Promise\RejectedPromise;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class ProfilePluginTest extends TestCase
+final class ProfilePluginTest extends TestCase
 {
-    private Plugin $plugin;
+    private Plugin&MockObject $plugin;
 
     private RequestInterface $request;
 
@@ -74,7 +75,7 @@ class ProfilePluginTest extends TestCase
         $this->subject = new ProfilePlugin(
             $this->plugin,
             $this->collector,
-            $formatter
+            $formatter,
         );
     }
 

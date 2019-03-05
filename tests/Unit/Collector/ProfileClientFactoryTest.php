@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class ProfileClientFactoryTest extends TestCase
+final class ProfileClientFactoryTest extends TestCase
 {
     private Collector $collector;
 

@@ -15,10 +15,8 @@ use Psr\Http\Message\ResponseInterface;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
- *
- * @final
  */
-class ProfilePlugin implements Plugin
+final class ProfilePlugin implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 

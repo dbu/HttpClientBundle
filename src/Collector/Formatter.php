@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\HttplugBundle\Collector;
 
-use Exception;
 use Http\Client\Exception\HttpException;
 use Http\Client\Exception\TransferException;
 use Http\Message\Formatter as MessageFormatter;
@@ -19,10 +18,8 @@ use Psr\Http\Message\ResponseInterface;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
- *
- * @final
  */
-class Formatter implements MessageFormatter
+final class Formatter implements MessageFormatter
 {
     public function __construct(
         private readonly MessageFormatter $formatter,

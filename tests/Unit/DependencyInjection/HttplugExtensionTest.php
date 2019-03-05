@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Reference;
  * @author David Buchmann <mail@davidbu.ch>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class HttplugExtensionTest extends AbstractExtensionTestCase
+final class HttplugExtensionTest extends AbstractExtensionTestCase
 {
     protected function setUp(): void
     {

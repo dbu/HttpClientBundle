@@ -8,7 +8,7 @@ use Http\HttplugBundle\Collector\Collector;
 use Http\HttplugBundle\Collector\Stack;
 use PHPUnit\Framework\TestCase;
 
-class CollectorTest extends TestCase
+final class CollectorTest extends TestCase
 {
     public function testCollectClientNames(): void
     {

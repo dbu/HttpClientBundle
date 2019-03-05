@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 
-class ServiceInstantiationTest extends WebTestCase
+final class ServiceInstantiationTest extends WebTestCase
 {
     public function testHttpClient(): void
     {

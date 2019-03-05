@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class Guzzle6FactoryTest extends TestCase
+final class Guzzle6FactoryTest extends TestCase
 {
     public function testCreateClient(): void
     {

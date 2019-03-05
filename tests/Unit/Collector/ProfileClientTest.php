@@ -25,7 +25,7 @@ use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Stopwatch\StopwatchEvent;
 
-class ProfileClientTest extends TestCase
+final class ProfileClientTest extends TestCase
 {
     private Collector $collector;
 

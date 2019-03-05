@@ -16,10 +16,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
- *
- * @final
  */
-class ProfileClientFactory implements ClientFactory
+final class ProfileClientFactory implements ClientFactory
 {
     /**
      * @var ClientFactory|callable

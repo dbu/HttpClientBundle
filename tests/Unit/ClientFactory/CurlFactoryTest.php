@@ -13,7 +13,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class CurlFactoryTest extends TestCase
+final class CurlFactoryTest extends TestCase
 {
     public function testCreateClient(): void
     {

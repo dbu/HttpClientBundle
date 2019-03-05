@@ -16,7 +16,7 @@ use Nyholm\NSA;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DiscoveredClientsTest extends WebTestCase
+final class DiscoveredClientsTest extends WebTestCase
 {
     public function testDiscoveredClient(): void
     {

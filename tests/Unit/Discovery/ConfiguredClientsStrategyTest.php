@@ -9,7 +9,7 @@ use Http\HttplugBundle\Discovery\ConfiguredClientsStrategy;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 
-class ConfiguredClientsStrategyTest extends TestCase
+final class ConfiguredClientsStrategyTest extends TestCase
 {
     public function testGetCandidates(): void
     {

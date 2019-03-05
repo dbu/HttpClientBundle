@@ -9,10 +9,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @author Wouter de Jong <wouter@wouterj.nl>
- *
- * @final
  */
-class ConfiguredClientsStrategyListener implements EventSubscriberInterface
+final class ConfiguredClientsStrategyListener implements EventSubscriberInterface
 {
     /**
      * Make sure to use the custom strategy.

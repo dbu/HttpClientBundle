@@ -8,10 +8,8 @@ use Http\Adapter\Guzzle7\Client;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
- *
- * @final
  */
-class Guzzle7Factory implements ClientFactory
+final class Guzzle7Factory implements ClientFactory
 {
     public function createClient(array $config = [])
     {

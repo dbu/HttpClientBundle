@@ -10,10 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
- *
- * @final
  */
-class BuzzFactory implements ClientFactory
+final class BuzzFactory implements ClientFactory
 {
     public function __construct(private readonly ResponseFactoryInterface $responseFactory)
     {

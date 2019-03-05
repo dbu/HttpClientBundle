@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProfilerTest extends WebTestCase
+final class ProfilerTest extends WebTestCase
 {
     /**
      * @group legacy
