@@ -101,5 +101,9 @@
             <argument type="service" id="httplug.psr17_response_factory"/>
             <argument type="service" id="httplug.psr17_stream_factory"/>
         </service>
+        <service id="httplug.factory.symfony_no_private_network" class="Http\HttplugBundle\ClientFactory\SymfonyNoPrivateNetworkFactory" public="false">
+            <argument type="service" id="httplug.psr17_response_factory"/>
+            <argument type="service" id="httplug.psr17_stream_factory"/>
+        </service>
     </services>
 </container>
