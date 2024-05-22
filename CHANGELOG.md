@@ -4,6 +4,10 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 1
 
+# unreleased
+
+- Fixed extension to depend on the DependencyInjection component rather than the HttpKernel.
+
 # 1.33.0 - 2024-02-27
 
 - Support php-http/cache-plugin 2.0 and bump minimal version to 1.7 by defaulting the stream factory for cache to `httplug.psr17_stream_factory` (#448).
