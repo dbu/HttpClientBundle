@@ -1,5 +1,7 @@
 includes:
     - phpstan-baseline.neon
+    - %rootDir%/../phpstan-symfony/extension.neon
+    - %rootDir%/../phpstan-symfony/rules.neon
 
 parameters:
     scanFiles:
