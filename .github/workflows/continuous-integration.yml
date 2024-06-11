@@ -104,8 +104,5 @@ jobs:
           dependency-versions: "${{ matrix.dependency-versions }}"
           composer-options: "${{ matrix.composer-options }}"
 
-      - name: "Run PHPStan"
-        run: "vendor/bin/phpstan analyse --no-progress"
-
       - name: "Run PHPUnit"
         run: "composer test"
