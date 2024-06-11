@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  coding-standards:
+  phpstan:
     name: "Coding Standards"
     runs-on: "ubuntu-latest"
 
