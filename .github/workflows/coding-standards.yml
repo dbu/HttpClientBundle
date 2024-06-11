@@ -9,14 +9,16 @@ on:
   pull_request:
 
 jobs:
-  coding-standards:
-    name: "Coding Standards"
+  phpstan:
+    name: "PHPStan"
     runs-on: "ubuntu-latest"
 
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
-      - name: "PHP-CS-Fixer"
-        uses: "docker://oskarstark/php-cs-fixer-ga:2.19.0"
+      - name: PHPStan
+        uses: "docker://oskarstark/phpstan-ga"
+        env:
+          REQUIRE_DEV: true
         with:
-          args: --diff --dry-run
+          args: analyze --no-progress

@@ -1,0 +1,31 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method create\\(\\) on an unknown class Symfony\\\\Component\\\\HttpClient\\\\HttpClient\\.$#"
+			count: 1
+			path: src/ClientFactory/SymfonyFactory.php
+
+		-
+			message: "#^Class Http\\\\Client\\\\Plugin\\\\Vcr\\\\NamingStrategy\\\\NamingStrategyInterface not found\\.$#"
+			count: 1
+			path: src/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Class Http\\\\Client\\\\Plugin\\\\Vcr\\\\Recorder\\\\PlayerInterface not found\\.$#"
+			count: 1
+			path: src/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Class Http\\\\Client\\\\Plugin\\\\Vcr\\\\Recorder\\\\RecorderInterface not found\\.$#"
+			count: 1
+			path: src/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Class Http\\\\Client\\\\Plugin\\\\Vcr\\\\RecordPlugin not found\\.$#"
+			count: 1
+			path: src/DependencyInjection/HttplugExtension.php
+
+		-
+			message: "#^Class Http\\\\Client\\\\Plugin\\\\Vcr\\\\ReplayPlugin not found\\.$#"
+			count: 1
+			path: src/DependencyInjection/HttplugExtension.php

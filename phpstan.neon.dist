@@ -1,0 +1,12 @@
+includes:
+    - phpstan-baseline.neon
+    - %rootDir%/../phpstan-symfony/extension.neon
+    - %rootDir%/../phpstan-symfony/rules.neon
+
+parameters:
+    scanFiles:
+        - vendor/symfony/dependency-injection/Loader/Configurator/ContainerConfigurator.php
+
+    level: 2
+    paths:
+        - src

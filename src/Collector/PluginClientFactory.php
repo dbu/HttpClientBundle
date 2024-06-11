@@ -45,11 +45,10 @@ final class PluginClientFactory
     /**
      * @param ClientInterface|HttpAsyncClient $client
      * @param Plugin[]                        $plugins
-     * @param array                           $options {
+     * @param array{client_name?: string}     $options
      *
-     *     @var string $client_name to give client a name which may be used when displaying client information like in
-     *         the HTTPlugBundle profiler.
-     * }
+     *        - client_name: to give client a name which may be used when displaying client information like in
+     *         the HTTPlugBundle profiler
      *
      * @see PluginClient constructor for PluginClient specific $options.
      *
@@ -61,7 +60,7 @@ final class PluginClientFactory
             return new ProfilePlugin($plugin, $this->collector, $this->formatter);
         }, $plugins);
 
-        $clientName = isset($options['client_name']) ? $options['client_name'] : 'Default';
+        $clientName = $options['client_name'] ?? 'Default';
         array_unshift($plugins, new StackPlugin($this->collector, $this->formatter, $clientName));
         unset($options['client_name']);
 
