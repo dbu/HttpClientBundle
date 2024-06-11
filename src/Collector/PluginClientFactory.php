@@ -47,7 +47,7 @@ final class PluginClientFactory
      * @param Plugin[]                        $plugins
      * @param array                           $options {
      *
-     *     @var string $client_name to give client a name which may be used when displaying client information like in
+     *     @type string $client_name to give client a name which may be used when displaying client information like in
      *         the HTTPlugBundle profiler.
      * }
      *
