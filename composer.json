@@ -84,10 +84,7 @@
     "autoload": {
         "psr-4": {
             "Http\\HttplugBundle\\": "src/"
-        },
-        "exclude-from-classmap": [
-            "/Tests/Resources/MyPsr18TestClient.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
