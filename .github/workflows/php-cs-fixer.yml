@@ -1,4 +1,4 @@
-name: "Static analysis"
+name: "PHP-CS-Fixer"
 
 on:
   push:
