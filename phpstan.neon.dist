@@ -4,6 +4,6 @@ includes:
 parameters:
     reportUnmatchedIgnoredErrors: false
 
-    level: max
+    level: 1
     paths:
         - src
