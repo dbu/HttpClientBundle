@@ -10,7 +10,7 @@ on:
 
 jobs:
   phpstan:
-    name: "Coding Standards"
+    name: "PHPStan"
     runs-on: "ubuntu-latest"
 
     steps:
