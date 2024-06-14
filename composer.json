@@ -52,7 +52,6 @@
         "matthiasnoback/symfony-dependency-injection-test": "^4.0 || ^5.0",
         "nyholm/nsa": "^1.1",
         "nyholm/psr7": "^1.2.1",
-        "php-http/throttle-plugin": "^1.1",
         "php-http/cache-plugin": "^1.7",
         "php-http/mock-client": "^1.2",
         "php-http/promise": "^1.0",

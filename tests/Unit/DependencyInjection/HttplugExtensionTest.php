@@ -162,11 +162,6 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                                 'only_server_exception' => true,
                             ],
                         ],
-                        [
-                            'throttle' => [
-                                'name' => 'test',
-                            ],
-                        ],
                     ],
                 ],
             ],
