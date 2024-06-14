@@ -625,7 +625,7 @@ class Configuration implements ConfigurationInterface
         ->end();
         // End error plugin
 
-        $throttle =  $children->arrayNode('throttle')
+        $throttle = $children->arrayNode('throttle')
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
