@@ -162,6 +162,11 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                                 'only_server_exception' => true,
                             ],
                         ],
+                        [
+                            'throttle' => [
+                                'name' => 'test',
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -184,6 +189,7 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
             'httplug.client.acme.authentication.my_basic',
             'httplug.client.acme.plugin.cache',
             'httplug.client.acme.plugin.error',
+            'httplug.client.acme.plugin.throttle',
         ];
         $pluginReferences = array_map(function ($id) {
             return new Reference($id);
