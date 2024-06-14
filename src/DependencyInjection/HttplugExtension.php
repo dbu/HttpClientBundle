@@ -10,6 +10,7 @@ use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
+use Http\Client\Common\Plugin\ThrottlePlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\Common\PluginClientFactory;
 use Http\Client\HttpAsyncClient;
@@ -294,6 +295,14 @@ class HttplugExtension extends Extension
                 break;
 
             case 'throttle':
+                if (!\interface_exists(LimiterInterface::class)) {
+                    throw new InvalidConfigurationException('You need to require the Rate Limiter to be able to use it: "composer require symfony/rate-limiter".');
+                }
+
+                if (!\class_exists(ThrottlePlugin::class)) {
+                    throw new InvalidConfigurationException('You need to require the Throttle Plugin to be able to use it: "composer require php-http/throttle-plugin".');
+                }
+
                 $key = $config['name'] ? '.'.$config['name'] : '';
                 $container
                     ->register($serviceId.$key, LimiterInterface::class)
