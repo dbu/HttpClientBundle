@@ -35,6 +35,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\RateLimiter\LimiterInterface;
 use Twig\Environment as TwigEnvironment;
 
 /**
@@ -293,11 +294,16 @@ class HttplugExtension extends Extension
                 break;
 
             case 'throttle':
-                $definition->replaceArgument(0, new Reference('rate_limiter.'.$config['name']));
-                $definition->addArgument([
-                    'tokens' => $config['tokens'],
-                    'maxTime' => $config['max_time'],
-                ]);
+                $key = $config['name'] ? '.'.$config['name'] : '';
+                $container
+                    ->register($serviceId.$key, LimiterInterface::class)
+                    ->setFactory([new Reference('limiter.'.$config['name']), 'create'])
+                    ->addArgument($config['key'])
+                    ->setPublic(false);
+
+                $definition->replaceArgument(0, new Reference($serviceId.$key));
+                $definition->setArgument('$tokens', $config['tokens']);
+                $definition->setArgument('$maxTime', $config['max_time']);
 
                 break;
 

@@ -630,8 +630,9 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('name')->end()
-                ->scalarNode('tokens')->defaultValue(1)->end()
-                ->scalarNode('max_time')->defaultNull()->end()
+                ->scalarNode('key')->defaultNull()->end()
+                ->integerNode('tokens')->defaultValue(1)->end()
+                ->floatNode('max_time')->defaultNull()->end()
             ->end()
         ->end();
         // End throttle plugin
