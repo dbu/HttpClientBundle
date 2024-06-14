@@ -315,7 +315,6 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 ],
                 'throttle' => [
                     'enabled' => false,
-                    'name' => 'limit',
                     'tokens' => 1,
                     'max_time' => null,
                 ],
