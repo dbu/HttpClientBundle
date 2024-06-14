@@ -292,6 +292,15 @@ class HttplugExtension extends Extension
 
                 break;
 
+            case 'throttle':
+                $definition->replaceArgument(0, new Reference('rate_limiter.'.$config['name']));
+                $definition->addArgument([
+                    'tokens' => $config['tokens'],
+                    'maxTime' => $config['max_time'],
+                ]);
+
+                break;
+
             /* client specific plugins */
 
             case 'add_host':
