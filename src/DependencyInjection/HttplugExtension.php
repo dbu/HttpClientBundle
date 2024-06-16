@@ -295,10 +295,6 @@ class HttplugExtension extends Extension
                 break;
 
             case 'throttle':
-                if (!\interface_exists(LimiterInterface::class)) {
-                    throw new InvalidConfigurationException('You need to require the Rate Limiter to be able to use it: "composer require symfony/rate-limiter".');
-                }
-
                 if (!\class_exists(ThrottlePlugin::class)) {
                     throw new InvalidConfigurationException('You need to require the Throttle Plugin to be able to use it: "composer require php-http/throttle-plugin".');
                 }
