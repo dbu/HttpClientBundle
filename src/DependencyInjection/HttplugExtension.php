@@ -299,14 +299,14 @@ class HttplugExtension extends Extension
                     throw new InvalidConfigurationException('You need to require the Throttle Plugin to be able to use it: "composer require php-http/throttle-plugin".');
                 }
 
-                $key = $config['name'] ? '.'.$config['name'] : '';
+                $limiterServiceId = $serviceId.'.'.$config['name'];
                 $container
-                    ->register($serviceId.$key, LimiterInterface::class)
+                    ->register($limiterServiceId, LimiterInterface::class)
                     ->setFactory([new Reference('limiter.'.$config['name']), 'create'])
                     ->addArgument($config['key'])
                     ->setPublic(false);
 
-                $definition->replaceArgument(0, new Reference($serviceId.$key));
+                $definition->replaceArgument(0, new Reference($limiterServiceId));
                 $definition->setArgument('$tokens', $config['tokens']);
                 $definition->setArgument('$maxTime', $config['max_time']);
 

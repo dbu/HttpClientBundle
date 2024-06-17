@@ -629,10 +629,10 @@ class Configuration implements ConfigurationInterface
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('name')->end()
-                ->scalarNode('key')->defaultNull()->end()
-                ->integerNode('tokens')->defaultValue(1)->end()
-                ->floatNode('max_time')->defaultNull()->end()
+                ->scalarNode('name')->isRequired()->info('Rate limiter configuration name from rate_limiter.yaml')->end()
+                ->scalarNode('key')->defaultNull()->info('A unique key for using one rate limiter name for different clients')->end()
+                ->integerNode('tokens')->defaultValue(1)->info('How many tokens spending per request')->end()
+                ->floatNode('max_time')->defaultNull()->info('Maximum accepted waiting time in seconds')->end()
             ->end()
         ->end();
         // End throttle plugin
