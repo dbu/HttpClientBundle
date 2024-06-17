@@ -630,7 +630,7 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('name')->isRequired()->info('Rate limiter configuration name from rate_limiter.yaml')->end()
-                ->scalarNode('key')->defaultNull()->info('A unique key for using one rate limiter name for different clients')->end()
+                ->scalarNode('key')->defaultNull()->info('Key to avoid sharing this rate limiter with other clients or other services. You can use the name of the client for example.')->end()
                 ->integerNode('tokens')->defaultValue(1)->info('How many tokens spending per request')->end()
                 ->floatNode('max_time')->defaultNull()->info('Maximum accepted waiting time in seconds')->end()
             ->end()
