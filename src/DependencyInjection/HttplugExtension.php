@@ -10,6 +10,7 @@ use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\Plugin\AuthenticationPlugin;
+use Http\Client\Common\Plugin\ThrottlePlugin;
 use Http\Client\Common\PluginClient;
 use Http\Client\Common\PluginClientFactory;
 use Http\Client\HttpAsyncClient;
@@ -30,9 +31,10 @@ use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\RateLimiter\LimiterInterface;
 use Twig\Environment as TwigEnvironment;
 
 /**
@@ -281,6 +283,24 @@ class HttplugExtension extends Extension
                 $definition->addArgument([
                     'only_server_exception' => $config['only_server_exception'],
                 ]);
+
+                break;
+
+            case 'throttle':
+                if (!\class_exists(ThrottlePlugin::class)) {
+                    throw new InvalidConfigurationException('You need to require the Throttle Plugin to be able to use it: "composer require php-http/throttle-plugin".');
+                }
+
+                $key = $config['name'] ? '.'.$config['name'] : '';
+                $container
+                    ->register($serviceId.$key, LimiterInterface::class)
+                    ->setFactory([new Reference('limiter.'.$config['name']), 'create'])
+                    ->addArgument($config['key'])
+                    ->setPublic(false);
+
+                $definition->replaceArgument(0, new Reference($serviceId.$key));
+                $definition->setArgument('$tokens', $config['tokens']);
+                $definition->setArgument('$maxTime', $config['max_time']);
 
                 break;
 
