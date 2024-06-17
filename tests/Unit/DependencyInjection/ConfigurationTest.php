@@ -98,6 +98,12 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'enabled' => false,
                 'only_server_exception' => false,
             ],
+            'throttle' => [
+                'enabled' => false,
+                'key' => null,
+                'tokens' => 1,
+                'max_time' => null,
+            ],
         ],
         'discovery' => [
             'client' => 'auto',
@@ -307,6 +313,12 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                 'error' => [
                     'enabled' => false,
                     'only_server_exception' => false,
+                ],
+                'throttle' => [
+                    'enabled' => false,
+                    'key' => null,
+                    'tokens' => 1,
+                    'max_time' => null,
                 ],
             ],
             'discovery' => [

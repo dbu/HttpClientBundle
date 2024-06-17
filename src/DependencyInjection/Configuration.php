@@ -624,6 +624,18 @@ class Configuration implements ConfigurationInterface
             ->end()
         ->end();
         // End error plugin
+
+        $throttle = $children->arrayNode('throttle')
+            ->canBeEnabled()
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('name')->end()
+                ->scalarNode('key')->defaultNull()->end()
+                ->integerNode('tokens')->defaultValue(1)->end()
+                ->floatNode('max_time')->defaultNull()->end()
+            ->end()
+        ->end();
+        // End throttle plugin
     }
 
     /**
