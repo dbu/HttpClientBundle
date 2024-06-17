@@ -302,7 +302,7 @@ class HttplugExtension extends Extension
                 $limiterServiceId = $serviceId.'.'.$config['name'];
                 $container
                     ->register($limiterServiceId, LimiterInterface::class)
-                    ->setFactory([new Reference('limiter.'.$config['name']), 'create'])
+                    ->setFactory([new Reference($config['name']), 'create'])
                     ->addArgument($config['key'])
                     ->setPublic(false);
 
