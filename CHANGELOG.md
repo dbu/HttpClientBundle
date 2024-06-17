@@ -4,6 +4,10 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 1
 
+# 1.34.0 - 2024-06-17
+
+- Support to configure the throttle plugin.
+
 # 1.33.1 - 2024-05-27
 
 - Fixed extension to depend on the DependencyInjection component rather than the HttpKernel.
