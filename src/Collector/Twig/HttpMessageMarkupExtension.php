@@ -22,7 +22,7 @@ class HttpMessageMarkupExtension extends AbstractExtension
     private $cloner;
 
     /**
-     * @var HtmlDumper
+     * @var DataDumperInterface
      */
     private $dumper;
 
