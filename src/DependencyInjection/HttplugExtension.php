@@ -45,10 +45,8 @@ class HttplugExtension extends Extension
 
     /**
      * Used to check is the VCR plugin is installed.
-     *
-     * @var bool
      */
-    private $useVcrPlugin = false;
+    private bool $useVcrPlugin = false;
 
     public function load(array $configs, ContainerBuilder $container): void
     {
