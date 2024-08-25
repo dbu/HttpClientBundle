@@ -19,14 +19,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class PluginClientFactoryListener implements EventSubscriberInterface
 {
-    /**
-     * @var PluginClientFactory
-     */
-    private $factory;
-
-    public function __construct(PluginClientFactory $factory)
+    public function __construct(private readonly PluginClientFactory $factory)
     {
-        $this->factory = $factory;
     }
 
     /**
@@ -34,7 +28,7 @@ final class PluginClientFactoryListener implements EventSubscriberInterface
      */
     public function onEvent(Event $e)
     {
-        DefaultPluginClientFactory::setFactory([$this->factory, 'createClient']);
+        DefaultPluginClientFactory::setFactory($this->factory->createClient(...));
     }
 
     /**

@@ -13,32 +13,14 @@ namespace Http\HttplugBundle\Collector;
  */
 final class Profile
 {
-    /**
-     * @var string
-     */
-    private $plugin;
+    private string $request;
 
-    /**
-     * @var string
-     */
-    private $request;
+    private string $response;
 
-    /**
-     * @var string
-     */
-    private $response;
+    private bool $failed = false;
 
-    /**
-     * @var bool
-     */
-    private $failed = false;
-
-    /**
-     * @param string $plugin
-     */
-    public function __construct($plugin)
+    public function __construct(private readonly string $plugin)
     {
-        $this->plugin = $plugin;
     }
 
     /**

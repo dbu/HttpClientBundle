@@ -186,9 +186,7 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
             'httplug.client.acme.plugin.cache',
             'httplug.client.acme.plugin.error',
         ];
-        $pluginReferences = array_map(function ($id) {
-            return new Reference($id);
-        }, $plugins);
+        $pluginReferences = array_map(fn($id) => new Reference($id), $plugins);
 
         $this->assertContainerBuilderHasService('httplug.client.acme');
         foreach ($plugins as $id) {

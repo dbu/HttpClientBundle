@@ -12,10 +12,7 @@ use Psr\Http\Client\ClientInterface;
  */
 final class MockFactory implements ClientFactory
 {
-    /**
-     * @var ClientInterface
-     */
-    private $client;
+    private ?ClientInterface $client = null;
 
     /**
      * Set the client instance that this factory should return.

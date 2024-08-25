@@ -13,14 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BuzzFactory implements ClientFactory
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(private readonly ResponseFactoryInterface $responseFactory)
     {
-        $this->responseFactory = $responseFactory;
     }
 
     /**

@@ -23,20 +23,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Formatter implements MessageFormatter
 {
-    /**
-     * @var MessageFormatter
-     */
-    private $formatter;
-
-    /**
-     * @var CurlCommandFormatter
-     */
-    private $curlFormatter;
-
-    public function __construct(MessageFormatter $formatter, MessageFormatter $curlFormatter)
+    public function __construct(private readonly MessageFormatter $formatter, private readonly MessageFormatter $curlFormatter)
     {
-        $this->formatter = $formatter;
-        $this->curlFormatter = $curlFormatter;
     }
 
     /**
@@ -54,7 +42,7 @@ class Formatter implements MessageFormatter
             return sprintf('Transfer error: %s', $exception->getMessage());
         }
 
-        return sprintf('Unexpected exception of type "%s": %s', get_class($exception), $exception->getMessage());
+        return sprintf('Unexpected exception of type "%s": %s', $exception::class, $exception->getMessage());
     }
 
     /**

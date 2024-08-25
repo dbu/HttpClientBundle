@@ -17,15 +17,9 @@ use Psr\Http\Client\ClientInterface;
  */
 class ConfiguredClientsStrategy implements DiscoveryStrategy
 {
-    /**
-     * @var ClientInterface
-     */
-    private static $client;
+    private static ?ClientInterface $client = null;
 
-    /**
-     * @var HttpAsyncClient
-     */
-    private static $asyncClient;
+    private static ?HttpAsyncClient $asyncClient = null;
 
     /**
      * @param ClientInterface $httpClient
@@ -44,15 +38,11 @@ class ConfiguredClientsStrategy implements DiscoveryStrategy
     public static function getCandidates($type)
     {
         if (ClientInterface::class === $type && null !== self::$client) {
-            return [['class' => function () {
-                return self::$client;
-            }]];
+            return [['class' => fn() => self::$client]];
         }
 
         if (HttpAsyncClient::class === $type && null !== self::$asyncClient) {
-            return [['class' => function () {
-                return self::$asyncClient;
-            }]];
+            return [['class' => fn() => self::$asyncClient]];
         }
 
         return [];

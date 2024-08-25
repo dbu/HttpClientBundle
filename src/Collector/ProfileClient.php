@@ -26,30 +26,9 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
 {
     use VersionBridgeClient;
 
-    /**
-     * @var ClientInterface&HttpAsyncClient
-     */
-    private $client;
+    private ClientInterface&HttpAsyncClient $client;
 
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
-     * @var Stopwatch
-     */
-    private $stopwatch;
-
-    /**
-     * @var array
-     */
-    private $eventNames = [];
+    private array $eventNames = [];
 
     private const STOPWATCH_CATEGORY = 'httplug';
 
@@ -57,16 +36,13 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
      * @param ClientInterface|HttpAsyncClient $client The client to profile. Client must implement HttpClient or
      *                                                HttpAsyncClient interface.
      */
-    public function __construct($client, Collector $collector, Formatter $formatter, Stopwatch $stopwatch)
+    public function __construct($client, private readonly Collector $collector, private readonly Formatter $formatter, private readonly Stopwatch $stopwatch)
     {
         if (!($client instanceof ClientInterface && $client instanceof HttpAsyncClient)) {
             $client = new FlexibleHttpClient($client);
         }
 
         $this->client = $client;
-        $this->collector = $collector;
-        $this->formatter = $formatter;
-        $this->stopwatch = $stopwatch;
     }
 
     public function sendAsyncRequest(RequestInterface $request)
@@ -92,7 +68,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
             return $response;
         };
 
-        $onRejected = function (\Exception $exception) use ($event, $stack) {
+        $onRejected = function (\Exception $exception) use ($event, $stack): void {
             $this->collectExceptionInformations($exception, $event, $stack);
             $event->stop();
 

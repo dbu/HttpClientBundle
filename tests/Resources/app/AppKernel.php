@@ -14,10 +14,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class AppKernel extends Kernel
 {
-    /**
-     * @var string
-     */
-    private static $cacheDir;
+    private static ?string $cacheDir = null;
 
     public function registerBundles(): iterable
     {
@@ -31,7 +28,7 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
-        $loader->load(function (ContainerBuilder $container) use ($loader) {
+        $loader->load(function (ContainerBuilder $container) use ($loader): void {
             $container->loadFromExtension('framework', [
                 'router' => [
                     'resource' => 'kernel::loadRoutes',

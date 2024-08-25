@@ -17,25 +17,13 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class ProfileClientFactoryTest extends TestCase
 {
-    /**
-     * @var Collector
-     */
-    private $collector;
+    private Collector $collector;
 
-    /**
-     * @var Formatter
-     */
-    private $formatter;
+    private Formatter $formatter;
 
-    /**
-     * @var Stopwatch&MockObject
-     */
-    private $stopwatch;
+    private Stopwatch&MockObject $stopwatch;
 
-    /**
-     * @var ClientInterface&MockObject
-     */
-    private $client;
+    private ClientInterface&MockObject $client;
 
     public function setUp(): void
     {
@@ -57,9 +45,7 @@ class ProfileClientFactoryTest extends TestCase
 
     public function testCreateClientFromCallable(): void
     {
-        $factory = function ($config) {
-            return $this->client;
-        };
+        $factory = fn($config) => $this->client;
 
         $subject = new ProfileClientFactory($factory, $this->collector, $this->formatter, $this->stopwatch);
 

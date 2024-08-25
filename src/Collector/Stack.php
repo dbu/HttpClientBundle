@@ -13,96 +13,44 @@ namespace Http\HttplugBundle\Collector;
  */
 final class Stack
 {
-    /**
-     * @var string
-     */
-    private $client;
+    private string $client;
 
-    /**
-     * @var Stack|null
-     */
-    private $parent;
+    private ?Stack $parent = null;
 
     /**
      * @var Profile[]
      */
-    private $profiles = [];
+    private array $profiles = [];
 
-    /**
-     * @var string
-     */
-    private $request;
+    private string $request;
 
-    /**
-     * @var string|null
-     */
-    private $response;
+    private ?string $response = null;
 
-    /**
-     * @var bool
-     */
-    private $failed = false;
+    private bool $failed = false;
 
-    /**
-     * @var string|null
-     */
-    private $requestTarget;
+    private ?string $requestTarget = null;
 
-    /**
-     * @var string|null
-     */
-    private $requestMethod;
+    private ?string $requestMethod = null;
 
-    /**
-     * @var string|null
-     */
-    private $requestHost;
+    private ?string $requestHost = null;
 
-    /**
-     * @var string|null
-     */
-    private $requestScheme;
+    private ?string $requestScheme = null;
 
-    /**
-     * @var int|null
-     */
-    private $requestPort;
+    private ?int $requestPort = null;
 
-    /**
-     * @var string|null
-     */
-    private $clientRequest;
+    private ?string $clientRequest = null;
 
-    /**
-     * @var string|null
-     */
-    private $clientResponse;
+    private ?string $clientResponse = null;
 
-    /**
-     * @var string|null
-     */
-    private $clientException;
+    private ?string $clientException = null;
 
-    /**
-     * @var int|null
-     */
-    private $responseCode;
+    private ?int $responseCode = null;
 
-    /**
-     * @var int
-     */
-    private $duration = 0;
+    private int $duration = 0;
 
-    /**
-     * @var string|null
-     */
-    private $curlCommand;
+    private ?string $curlCommand = null;
 
-    /**
-     * @param string $client
-     * @param string $request
-     */
-    public function __construct($client, $request)
+    public function __construct(string $client, string $request)
     {
         $this->client = $client;
         $this->request = $request;

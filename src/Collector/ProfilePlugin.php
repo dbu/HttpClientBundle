@@ -21,31 +21,13 @@ class ProfilePlugin implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 
-    /**
-     * @var Plugin
-     */
-    private $plugin;
-
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    public function __construct(Plugin $plugin, Collector $collector, Formatter $formatter)
+    public function __construct(private Plugin $plugin, private Collector $collector, private Formatter $formatter)
     {
-        $this->plugin = $plugin;
-        $this->collector = $collector;
-        $this->formatter = $formatter;
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $profile = new Profile(get_class($this->plugin));
+        $profile = new Profile($this->plugin::class);
 
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
@@ -79,7 +61,7 @@ class ProfilePlugin implements Plugin
             $this->onOutgoingResponse($response, $profile, $request, $stack);
 
             return $response;
-        }, function (Exception $exception) use ($profile, $request, $stack) {
+        }, function (Exception $exception) use ($profile, $request, $stack): void {
             $this->onException($request, $profile, $exception, $stack);
 
             throw $exception;

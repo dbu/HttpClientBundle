@@ -22,28 +22,10 @@ class StackPlugin implements Plugin
     use Plugin\VersionBridgePlugin;
 
     /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var string
-     */
-    private $client;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
      * @param string $client
      */
-    public function __construct(Collector $collector, Formatter $formatter, $client)
+    public function __construct(private Collector $collector, private Formatter $formatter, private $client)
     {
-        $this->collector = $collector;
-        $this->formatter = $formatter;
-        $this->client = $client;
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
@@ -59,7 +41,7 @@ class StackPlugin implements Plugin
             return $response;
         };
 
-        $onRejected = function (Exception $exception) use ($stack) {
+        $onRejected = function (Exception $exception) use ($stack): void {
             $stack->setResponse($this->formatter->formatException($exception));
             $stack->setFailed(true);
 

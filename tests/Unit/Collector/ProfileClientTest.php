@@ -27,45 +27,21 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
 
 class ProfileClientTest extends TestCase
 {
-    /**
-     * @var Collector
-     */
-    private $collector;
+    private Collector $collector;
 
-    /**
-     * @var CombinedClientInterface&MockObject
-     */
-    private $client;
+    private CombinedClientInterface&MockObject $client;
 
-    /**
-     * @var RequestInterface
-     */
-    private $request;
+    private RequestInterface $request;
 
-    /**
-     * @var StopwatchEvent
-     */
-    private $stopwatchEvent;
+    private StopwatchEvent $stopwatchEvent;
 
-    /**
-     * @var ProfileClient
-     */
-    private $subject;
+    private ProfileClient $subject;
 
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
+    private ResponseInterface $response;
 
-    /**
-     * @var Promise
-     */
-    private $fulfilledPromise;
+    private Promise $fulfilledPromise;
 
-    /**
-     * @var RejectedPromise
-     */
-    private $rejectedPromise;
+    private RejectedPromise $rejectedPromise;
 
     public function setUp(): void
     {
@@ -128,7 +104,7 @@ class ProfileClientTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('sendRequest')
-            ->willReturnCallback(function () {
+            ->willReturnCallback(function (): void {
                 throw new \Error('You set string to int prop');
             });
 

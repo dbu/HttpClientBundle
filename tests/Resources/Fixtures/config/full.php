@@ -12,14 +12,14 @@ $container->loadFromExtension('httplug', [
         'psr17_stream_factory' => 'my_psr17_stream_factory',
     ],
     'classes' => [
-        'client' => 'Http\Adapter\Guzzle7\Client',
-        'psr18_client' => 'Http\Adapter\Guzzle7\Client',
-        'psr17_request_factory' => 'Nyholm\Psr7\Factory\Psr17Factory',
-        'psr17_response_factory' => 'Nyholm\Psr7\Factory\Psr17Factory',
-        'psr17_stream_factory' => 'Nyholm\Psr7\Factory\Psr17Factory',
-        'psr17_uri_factory' => 'Nyholm\Psr7\Factory\Psr17Factory',
-        'psr17_uploaded_file_factory' => 'Nyholm\Psr7\Factory\Psr17Factory',
-        'psr17_server_request_factory' => 'Nyholm\Psr7\Factory\Psr17Factory',
+        'client' => \Http\Adapter\Guzzle7\Client::class,
+        'psr18_client' => \Http\Adapter\Guzzle7\Client::class,
+        'psr17_request_factory' => \Nyholm\Psr7\Factory\Psr17Factory::class,
+        'psr17_response_factory' => \Nyholm\Psr7\Factory\Psr17Factory::class,
+        'psr17_stream_factory' => \Nyholm\Psr7\Factory\Psr17Factory::class,
+        'psr17_uri_factory' => \Nyholm\Psr7\Factory\Psr17Factory::class,
+        'psr17_uploaded_file_factory' => \Nyholm\Psr7\Factory\Psr17Factory::class,
+        'psr17_server_request_factory' => \Nyholm\Psr7\Factory\Psr17Factory::class,
     ],
     'clients' => [
         'test' => [

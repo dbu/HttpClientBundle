@@ -209,9 +209,7 @@ class HttplugExtension extends Extension
                     unset($options['blacklisted_paths']);
                 }
 
-                $options['cache_listeners'] = array_map(function (string $serviceName): Reference {
-                    return new Reference($serviceName);
-                }, $options['cache_listeners']);
+                $options['cache_listeners'] = array_map(fn(string $serviceName): Reference => new Reference($serviceName), $options['cache_listeners']);
 
                 if (0 === count($options['cache_listeners'])) {
                     unset($options['cache_listeners']);
@@ -441,9 +439,7 @@ class HttplugExtension extends Extension
             ->addArgument(new Reference($serviceId.'.client'))
             ->addArgument(
                 array_map(
-                    function ($id) {
-                        return new Reference($id);
-                    },
+                    fn($id) => new Reference($id),
                     $plugins
                 )
             )
