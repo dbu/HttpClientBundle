@@ -22,21 +22,12 @@ jobs:
         include:
           # Minimum supported Symfony version and lowest PHP version
           - dependencies: "php-http/guzzle7-adapter php-http/discovery:^1.12"
-            php-version: "7.3"
+            php-version: "8.1"
             dependency-versions: "lowest"
             symfony-deprecations-helper: "weak"
             stability: "stable"
 
           # Test the latest stable release
-          - dependencies: "php-http/guzzle7-adapter php-http/vcr-plugin:^1.0@dev"
-            php-version: "7.3"
-            symfony-deprecations-helper: "weak"
-          - dependencies: "php-http/guzzle6-adapter"
-            php-version: "7.4"
-            symfony-deprecations-helper: "weak"
-          - dependencies: "php-http/guzzle7-adapter"
-            php-version: "8.0"
-            symfony-deprecations-helper: "weak"
           - dependencies: "php-http/guzzle7-adapter"
             php-version: "8.1"
             symfony-deprecations-helper: "weak"
@@ -49,7 +40,7 @@ jobs:
 
           # Test with httplug 2.x clients
           - dependencies: "php-http/guzzle7-adapter php-http/curl-client:^2.0.0 php-http/vcr-plugin:^1.0@dev php-http/socket-client:^2.0"
-            php-version: "7.3"
+            php-version: "8.1"
             symfony-deprecations-helper: "weak"
 
           # Latest commit to master
@@ -63,17 +54,17 @@ jobs:
             symfony-deprecations-helper: "weak"
 
           # Test maintained versions of Symfony
-          - dependencies: "php-http/guzzle7-adapter symfony/http-client:^5.4"
-            symfony-require: "5.4.*"
-            php-version: "7.3"
-            symfony-deprecations-helper: "weak"
-          - dependencies: "php-http/guzzle7-adapter symfony/http-client:^6.0"
-            symfony-require: "6.3.*"
-            php-version: "8.2"
-            symfony-deprecations-helper: "weak"
-          - dependencies: "php-http/guzzle7-adapter symfony/http-client:^6.0"
+          - dependencies: "php-http/guzzle7-adapter symfony/http-client:^6.4"
             symfony-require: "6.4.*"
             php-version: "8.1"
+            symfony-deprecations-helper: "weak"
+          - dependencies: "php-http/guzzle7-adapter symfony/http-client:^6.4"
+            symfony-require: "6.4.*"
+            php-version: "8.2"
+            symfony-deprecations-helper: "weak"
+          - dependencies: "php-http/guzzle7-adapter symfony/http-client:^7.1"
+            symfony-require: "7.1.*"
+            php-version: "8.2"
             symfony-deprecations-helper: "weak"
 
     steps:

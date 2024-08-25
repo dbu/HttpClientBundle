@@ -5,6 +5,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 # Version 2
 
 # 2.0.0 - (unreleased)
+- Increased min PHP version to 8.1
 - Fixed a deprecation when creating a `HttpMethodsClient` via `http_methods_client: true`. Only PSR-17 factories are now passed as constructor arguments.
 - Changed the default stream factory argument for the cache plugin. This now requires a PSR-17 StreamFactoryInterface instance.
 - Creating a client using the `BuzzFactory` no longer accepts `verify_peer` and `verify_host` config options. Only a boolean `verify` flag is accepted, covering both previous options.
