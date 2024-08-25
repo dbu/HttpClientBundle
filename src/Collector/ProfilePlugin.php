@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\HttplugBundle\Collector;
 
-use Exception;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -51,7 +50,7 @@ class ProfilePlugin implements Plugin
 
         try {
             $promise = $this->plugin->handleRequest($request, $wrappedNext, $wrappedFirst);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->onException($request, $profile, $e, $stack);
 
             throw $e;
@@ -61,7 +60,7 @@ class ProfilePlugin implements Plugin
             $this->onOutgoingResponse($response, $profile, $request, $stack);
 
             return $response;
-        }, function (Exception $exception) use ($profile, $request, $stack): void {
+        }, function (\Exception $exception) use ($profile, $request, $stack): void {
             $this->onException($request, $profile, $exception, $stack);
 
             throw $exception;
@@ -71,7 +70,7 @@ class ProfilePlugin implements Plugin
     private function onException(
         RequestInterface $request,
         Profile $profile,
-        Exception $exception,
+        \Exception $exception,
         Stack $stack
     ): void {
         $profile->setFailed(true);

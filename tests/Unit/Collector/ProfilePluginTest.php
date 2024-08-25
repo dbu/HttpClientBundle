@@ -56,7 +56,7 @@ class ProfilePluginTest extends TestCase
 
         $this->plugin
             ->method('handleRequest')
-            ->willReturnCallback(fn($request, $next, $first) => $next($request))
+            ->willReturnCallback(fn ($request, $next, $first) => $next($request))
         ;
 
         $messageFormatter
@@ -86,13 +86,13 @@ class ProfilePluginTest extends TestCase
             ->with($this->request)
         ;
 
-        $this->subject->handleRequest($this->request, fn() => $this->fulfilledPromise, function (): void {
+        $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
     }
 
     public function testProfileIsInitialized(): void
     {
-        $this->subject->handleRequest($this->request, fn() => $this->fulfilledPromise, function (): void {
+        $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
 
         $activeStack = $this->collector->getActiveStack();
@@ -103,7 +103,7 @@ class ProfilePluginTest extends TestCase
 
     public function testCollectRequestInformations(): void
     {
-        $this->subject->handleRequest($this->request, fn() => $this->fulfilledPromise, function (): void {
+        $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
 
         $activeStack = $this->collector->getActiveStack();
@@ -114,7 +114,7 @@ class ProfilePluginTest extends TestCase
 
     public function testOnFulfilled(): void
     {
-        $promise = $this->subject->handleRequest($this->request, fn() => $this->fulfilledPromise, function (): void {
+        $promise = $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
 
         $this->assertEquals($this->response, $promise->wait());
@@ -127,7 +127,7 @@ class ProfilePluginTest extends TestCase
 
     public function testOnRejected(): void
     {
-        $promise = $this->subject->handleRequest($this->request, fn() => $this->rejectedPromise, function (): void {
+        $promise = $this->subject->handleRequest($this->request, fn () => $this->rejectedPromise, function (): void {
         });
 
         $activeStack = $this->collector->getActiveStack();

@@ -38,7 +38,7 @@ final class PluginClientFactory
      */
     public function createClient($client, array $plugins = [], array $options = [])
     {
-        $plugins = array_map(fn(Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter), $plugins);
+        $plugins = array_map(fn (Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter), $plugins);
 
         $clientName = $options['client_name'] ?? 'Default';
         array_unshift($plugins, new StackPlugin($this->collector, $this->formatter, $clientName));

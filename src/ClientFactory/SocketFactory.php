@@ -11,9 +11,6 @@ use Http\Client\Socket\Client;
  */
 class SocketFactory implements ClientFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists('Http\Client\Socket\Client')) {

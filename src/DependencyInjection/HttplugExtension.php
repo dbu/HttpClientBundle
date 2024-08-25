@@ -189,7 +189,6 @@ class HttplugExtension extends Extension
     }
 
     /**
-     * @param string           $name
      * @param ContainerBuilder $container In case we need to add additional services for this plugin
      * @param string           $serviceId service id of the plugin, in case we need to add additional services for this plugin
      */
@@ -209,7 +208,7 @@ class HttplugExtension extends Extension
                     unset($options['blacklisted_paths']);
                 }
 
-                $options['cache_listeners'] = array_map(fn(string $serviceName): Reference => new Reference($serviceName), $options['cache_listeners']);
+                $options['cache_listeners'] = array_map(fn (string $serviceName): Reference => new Reference($serviceName), $options['cache_listeners']);
 
                 if (0 === count($options['cache_listeners'])) {
                     unset($options['cache_listeners']);
@@ -280,7 +279,7 @@ class HttplugExtension extends Extension
 
                 break;
 
-            /* client specific plugins */
+                /* client specific plugins */
 
             case 'add_host':
                 $hostUriService = $serviceId.'.host_uri';
@@ -439,7 +438,7 @@ class HttplugExtension extends Extension
             ->addArgument(new Reference($serviceId.'.client'))
             ->addArgument(
                 array_map(
-                    fn($id) => new Reference($id),
+                    fn ($id) => new Reference($id),
                     $plugins
                 )
             )
@@ -535,9 +534,6 @@ class HttplugExtension extends Extension
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
         return new Configuration($container->getParameter('kernel.debug'));

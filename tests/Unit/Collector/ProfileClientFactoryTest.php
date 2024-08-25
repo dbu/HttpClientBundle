@@ -45,7 +45,7 @@ class ProfileClientFactoryTest extends TestCase
 
     public function testCreateClientFromCallable(): void
     {
-        $factory = fn($config) => $this->client;
+        $factory = fn ($config) => $this->client;
 
         $subject = new ProfileClientFactory($factory, $this->collector, $this->formatter, $this->stopwatch);
 

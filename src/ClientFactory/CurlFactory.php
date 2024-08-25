@@ -17,9 +17,6 @@ class CurlFactory implements ClientFactory
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists('Http\Client\Curl\Client')) {

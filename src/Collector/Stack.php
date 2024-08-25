@@ -72,9 +72,6 @@ final class Stack
         return $this->parent;
     }
 
-    /**
-     * @param Stack $parent
-     */
     public function setParent(self $parent)
     {
         $this->parent = $parent;

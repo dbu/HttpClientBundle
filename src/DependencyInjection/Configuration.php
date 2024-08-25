@@ -49,9 +49,6 @@ class Configuration implements ConfigurationInterface
         $this->debug = (bool) $debug;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('httplug');
@@ -62,7 +59,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->validate()
-                ->ifTrue(fn($v) => !empty($v['classes']['client'])
+                ->ifTrue(fn ($v) => !empty($v['classes']['client'])
                     || !empty($v['classes']['psr17_request_factory'])
                     || !empty($v['classes']['psr17_response_factory'])
                     || !empty($v['classes']['psr17_uri_factory'])
@@ -82,7 +79,7 @@ class Configuration implements ConfigurationInterface
                 })
             ->end()
             ->beforeNormalization()
-                ->ifTrue(fn($v) => is_array($v) && array_key_exists('toolbar', $v) && is_array($v['toolbar']))
+                ->ifTrue(fn ($v) => is_array($v) && array_key_exists('toolbar', $v) && is_array($v['toolbar']))
                 ->then(function ($v) {
                     if (array_key_exists('profiling', $v)) {
                         throw new InvalidConfigurationException('Can\'t configure both "toolbar" and "profiling" section. The "toolbar" config is deprecated as of version 1.3.0, please only use "profiling".');
@@ -150,7 +147,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('formatter')->defaultNull()->end()
                         ->scalarNode('captured_body_length')
                             ->validate()
-                                ->ifTrue(fn($v) => null !== $v && !is_int($v))
+                                ->ifTrue(fn ($v) => null !== $v && !is_int($v))
                                 ->thenInvalid('The child node "captured_body_length" at path "httplug.profiling" must be an integer or null ("%s" given).')
                             ->end()
                             ->defaultValue(0)
@@ -185,17 +182,17 @@ class Configuration implements ConfigurationInterface
                 ->prototype('array')
                 ->fixXmlConfig('plugin')
                 ->validate()
-                    ->ifTrue(fn($config) =>
+                    ->ifTrue(fn ($config) =>
                         // Make sure we only allow one of these to be true
                         (bool) $config['flexible_client'] + (bool) $config['http_methods_client'] + (bool) $config['batch_client'] >= 2)
                     ->thenInvalid('A http client can\'t be decorated with several of FlexibleHttpClient, HttpMethodsClient and BatchClient. Only one of the following options can be true. ("flexible_client", "http_methods_client", "batch_client")')
                 ->end()
                 ->validate()
-                    ->ifTrue(fn($config) => 'httplug.factory.auto' === $config['factory'] && !empty($config['config']))
+                    ->ifTrue(fn ($config) => 'httplug.factory.auto' === $config['factory'] && !empty($config['config']))
                     ->thenInvalid('If you want to use the "config" key you must also specify a valid "factory".')
                 ->end()
                 ->validate()
-                    ->ifTrue(fn($config) => !empty($config['service']) && ('httplug.factory.auto' !== $config['factory'] || !empty($config['config'])))
+                    ->ifTrue(fn ($config) => !empty($config['service']) && ('httplug.factory.auto' !== $config['factory'] || !empty($config['config'])))
                     ->thenInvalid('If you want to use the "service" key you cannot specify "factory" or "config".')
                 ->end()
                 ->children()
@@ -456,7 +453,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->info('Record response to be replayed during tests or development cycle.')
                     ->validate()
-                        ->ifTrue(fn($config) => 'filesystem' === $config['recorder'] && empty($config['fixtures_directory']))
+                        ->ifTrue(fn ($config) => 'filesystem' === $config['recorder'] && empty($config['fixtures_directory']))
                         ->thenInvalid('If you want to use the "filesystem" recorder you must also specify a "fixtures_directory".')
                     ->end()
                     ->children()
@@ -703,7 +700,7 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('cache_listener')
             ->addDefaultsIfNotSet()
             ->validate()
-                ->ifTrue(fn($config) =>
+                ->ifTrue(fn ($config) =>
                     // Cannot set both respect_cache_headers and respect_response_cache_directives
                     isset($config['respect_cache_headers'], $config['respect_response_cache_directives']))
                 ->thenInvalid('You can\'t provide config option "respect_cache_headers" and "respect_response_cache_directives" simultaneously. Use "respect_response_cache_directives" instead.')
@@ -715,14 +712,14 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('cache_lifetime')
                     ->info('The minimum time we should store a cache item')
                     ->validate()
-                    ->ifTrue(fn($v) => null !== $v && !is_int($v))
+                    ->ifTrue(fn ($v) => null !== $v && !is_int($v))
                     ->thenInvalid('cache_lifetime must be an integer or null, got %s')
                     ->end()
                 ->end()
                 ->scalarNode('default_ttl')
                     ->info('The default max age of a Response')
                     ->validate()
-                        ->ifTrue(fn($v) => null !== $v && !is_int($v))
+                        ->ifTrue(fn ($v) => null !== $v && !is_int($v))
                         ->thenInvalid('default_ttl must be an integer or null, got %s')
                     ->end()
                 ->end()
@@ -734,7 +731,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->prototype('scalar')
                         ->validate()
-                            ->ifTrue(fn($v) => false === @preg_match($v, ''))
+                            ->ifTrue(fn ($v) => false === @preg_match($v, ''))
                             ->thenInvalid('Invalid regular expression for a blacklisted path: %s')
                         ->end()
                     ->end()
@@ -749,7 +746,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(['GET', 'HEAD'])
                     ->prototype('scalar')
                         ->validate()
-                            ->ifTrue(fn($v) =>
+                            ->ifTrue(fn ($v) =>
                                 /* RFC7230 sections 3.1.1 and 3.2.6 except limited to uppercase characters. */
                                 preg_match('/[^A-Z0-9!#$%&\'*+\-.^_`|~]+/', (string) $v))
                             ->thenInvalid('Invalid method: %s')
@@ -799,7 +796,7 @@ class Configuration implements ConfigurationInterface
             ->info('Configure HTTP caching, requires the php-http/cache-plugin package')
             ->addDefaultsIfNotSet()
             ->validate()
-                ->ifTrue(fn($v) => !empty($v['enabled']) && !class_exists(CachePlugin::class))
+                ->ifTrue(fn ($v) => !empty($v['enabled']) && !class_exists(CachePlugin::class))
                 ->thenInvalid('To use the cache plugin, you need to require php-http/cache-plugin in your project')
             ->end()
             ->children()

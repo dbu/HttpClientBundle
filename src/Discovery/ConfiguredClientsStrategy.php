@@ -21,10 +21,6 @@ class ConfiguredClientsStrategy implements DiscoveryStrategy
 
     private static ?HttpAsyncClient $asyncClient = null;
 
-    /**
-     * @param ClientInterface $httpClient
-     * @param HttpAsyncClient $asyncClient
-     */
     public function __construct(ClientInterface $httpClient = null, HttpAsyncClient $asyncClient = null)
     {
         self::$client = $httpClient;
@@ -32,17 +28,14 @@ class ConfiguredClientsStrategy implements DiscoveryStrategy
         Psr18ClientDiscovery::clearCache();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getCandidates($type)
     {
         if (ClientInterface::class === $type && null !== self::$client) {
-            return [['class' => fn() => self::$client]];
+            return [['class' => fn () => self::$client]];
         }
 
         if (HttpAsyncClient::class === $type && null !== self::$asyncClient) {
-            return [['class' => fn() => self::$asyncClient]];
+            return [['class' => fn () => self::$asyncClient]];
         }
 
         return [];

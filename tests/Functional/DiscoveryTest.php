@@ -30,9 +30,6 @@ final class DiscoveryTest extends AbstractExtensionTestCase
         $this->setParameter('kernel.debug', true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getContainerExtensions(): array
     {
         return [

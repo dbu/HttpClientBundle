@@ -97,7 +97,7 @@ class ProfilingTest extends TestCase
 
     private function createClient(array $plugins, $clientName = 'Acme', array $clientOptions = [])
     {
-        $plugins = array_map(fn(Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter, $plugin::class), $plugins);
+        $plugins = array_map(fn (Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter, $plugin::class), $plugins);
 
         array_unshift($plugins, new StackPlugin($this->collector, $this->formatter, $clientName));
 

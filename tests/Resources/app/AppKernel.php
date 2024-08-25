@@ -19,9 +19,9 @@ class AppKernel extends Kernel
     public function registerBundles(): iterable
     {
         return [
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Http\HttplugBundle\HttplugBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
             new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
         ];
     }
@@ -57,7 +57,7 @@ class AppKernel extends Kernel
 
     public function loadRoutes(LoaderInterface $loader): RouteCollection
     {
-        $file = (new \ReflectionObject($this))->getFileName();
+        $file = (new ReflectionObject($this))->getFileName();
         /* @var RoutingPhpFileLoader $kernelLoader */
         $kernelLoader = $loader->getResolver()->resolve($file, 'php');
         $kernelLoader->setCurrentDir(\dirname($file));

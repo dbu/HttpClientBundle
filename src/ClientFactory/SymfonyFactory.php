@@ -18,9 +18,6 @@ class SymfonyFactory implements ClientFactory
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists(HttplugClient::class)) {

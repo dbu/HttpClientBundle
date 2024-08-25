@@ -8,7 +8,6 @@ use Exception;
 use Http\Client\Exception\HttpException;
 use Http\Client\Exception\TransferException;
 use Http\Message\Formatter as MessageFormatter;
-use Http\Message\Formatter\CurlCommandFormatter;
 use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -45,9 +44,6 @@ class Formatter implements MessageFormatter
         return sprintf('Unexpected exception of type "%s": %s', $exception::class, $exception->getMessage());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function formatRequest(RequestInterface $request)
     {
         return $this->formatter->formatRequest($request);

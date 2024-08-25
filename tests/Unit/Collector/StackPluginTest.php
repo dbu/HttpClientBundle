@@ -72,7 +72,7 @@ class StackPluginTest extends TestCase
 
     public function testStackIsInitialized(): void
     {
-        $next = fn() => new FulfilledPromise($this->response);
+        $next = fn () => new FulfilledPromise($this->response);
 
         $this->subject->handleRequest($this->request, $next, function (): void {
         });
@@ -86,7 +86,7 @@ class StackPluginTest extends TestCase
 
     public function testOnFulfilled(): void
     {
-        $next = fn() => new FulfilledPromise($this->response);
+        $next = fn () => new FulfilledPromise($this->response);
 
         $promise = $this->subject->handleRequest($this->request, $next, function (): void {
         });
@@ -100,7 +100,7 @@ class StackPluginTest extends TestCase
 
     public function testOnRejected(): void
     {
-        $next = fn() => new RejectedPromise($this->exception);
+        $next = fn () => new RejectedPromise($this->exception);
 
         $promise = $this->subject->handleRequest($this->request, $next, function (): void {
         });
@@ -134,7 +134,7 @@ class StackPluginTest extends TestCase
             $this->expectException(Warning::class);
         }
 
-        $next = fn() => 2 / 0;
+        $next = fn () => 2 / 0;
 
         $this->subject->handleRequest($this->request, $next, function (): void {
         });

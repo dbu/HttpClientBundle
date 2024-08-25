@@ -20,15 +20,13 @@ class HttpMessageMarkupExtension extends AbstractExtension
 
     private DataDumperInterface $dumper;
 
-    public function __construct(?ClonerInterface $cloner = null, ?DataDumperInterface $dumper = null)
+    public function __construct(ClonerInterface $cloner = null, DataDumperInterface $dumper = null)
     {
         $this->cloner = $cloner ?: new VarCloner();
         $this->dumper = $dumper ?: new HtmlDumper();
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array
      */
     public function getFilters()

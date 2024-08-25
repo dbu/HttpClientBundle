@@ -120,9 +120,6 @@ class ServiceInstantiationTest extends WebTestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function bootKernel(array $options = []): KernelInterface
     {
         parent::bootKernel($options);

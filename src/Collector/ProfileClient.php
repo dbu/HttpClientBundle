@@ -50,8 +50,8 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
         $activateStack = true;
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
-            //When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
-            //we create our own stack and activate it!
+            // When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
+            // we create our own stack and activate it!
             $stack = new Stack('Default', $this->formatter->formatRequest($request));
             $this->collector->addStack($stack);
             $this->collector->activateStack($stack);
@@ -85,7 +85,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
             throw $e;
         } finally {
             if ($activateStack) {
-                //We only activate the stack when created by the StackPlugin.
+                // We only activate the stack when created by the StackPlugin.
                 $this->collector->activateStack($stack);
             }
         }
@@ -95,8 +95,8 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
     {
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
-            //When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
-            //we create our own stack but don't activate it.
+            // When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
+            // we create our own stack but don't activate it.
             $stack = new Stack('Default', $this->formatter->formatRequest($request));
             $this->collector->addStack($stack);
         }

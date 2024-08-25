@@ -31,9 +31,6 @@ final class PluginClientFactoryListener implements EventSubscriberInterface
         DefaultPluginClientFactory::setFactory($this->factory->createClient(...));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -186,7 +186,7 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
             'httplug.client.acme.plugin.cache',
             'httplug.client.acme.plugin.error',
         ];
-        $pluginReferences = array_map(fn($id) => new Reference($id), $plugins);
+        $pluginReferences = array_map(fn ($id) => new Reference($id), $plugins);
 
         $this->assertContainerBuilderHasService('httplug.client.acme');
         foreach ($plugins as $id) {
@@ -504,6 +504,7 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @dataProvider provideVcrPluginConfig
+     *
      * @group vcr-plugin
      */
     public function testVcrPluginConfiguration(array $config, array $services, array $arguments = []): void

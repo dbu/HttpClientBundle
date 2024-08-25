@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\HttplugBundle\Collector;
 
-use Exception;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -41,7 +40,7 @@ class StackPlugin implements Plugin
             return $response;
         };
 
-        $onRejected = function (Exception $exception) use ($stack): void {
+        $onRejected = function (\Exception $exception) use ($stack): void {
             $stack->setResponse($this->formatter->formatException($exception));
             $stack->setFailed(true);
 

@@ -24,9 +24,6 @@ final class MockFactory implements ClientFactory
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists(Client::class)) {
