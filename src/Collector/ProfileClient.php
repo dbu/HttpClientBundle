@@ -156,7 +156,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
 
     private function collectResponseInformations(RequestInterface $request, ResponseInterface $response, StopwatchEvent $event, Stack $stack): void
     {
-        $stack->setDuration($event->getDuration());
+        $stack->setDuration((int) $event->getDuration());
         $stack->setResponseCode($response->getStatusCode());
         $stack->setClientResponse($this->formatter->formatResponseForRequest($response, $request));
     }
@@ -167,7 +167,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
             $this->collectResponseInformations($exception->getRequest(), $exception->getResponse(), $event, $stack);
         }
 
-        $stack->setDuration($event->getDuration());
+        $stack->setDuration((int) $event->getDuration());
         $stack->setClientException($this->formatter->formatException($exception));
     }
 
