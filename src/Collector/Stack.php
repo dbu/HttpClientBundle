@@ -19,7 +19,7 @@ final class Stack
     private $client;
 
     /**
-     * @var Stack
+     * @var Stack|null
      */
     private $parent;
 
@@ -34,7 +34,7 @@ final class Stack
     private $request;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $response;
 
@@ -44,22 +44,22 @@ final class Stack
     private $failed = false;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $requestTarget;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $requestMethod;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $requestHost;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $requestScheme;
 
@@ -69,22 +69,22 @@ final class Stack
     private $requestPort;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $clientRequest;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $clientResponse;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $clientException;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $responseCode;
 
@@ -94,7 +94,7 @@ final class Stack
     private $duration = 0;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $curlCommand;
 
@@ -117,7 +117,7 @@ final class Stack
     }
 
     /**
-     * @return Stack
+     * @return Stack|null
      */
     public function getParent()
     {
@@ -154,7 +154,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getResponse()
     {
@@ -186,7 +186,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestTarget()
     {
@@ -202,7 +202,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestMethod()
     {
@@ -218,7 +218,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientRequest()
     {
@@ -234,7 +234,7 @@ final class Stack
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getClientResponse()
     {
@@ -242,7 +242,7 @@ final class Stack
     }
 
     /**
-     * @param mixed $clientResponse
+     * @param string $clientResponse
      */
     public function setClientResponse($clientResponse)
     {
@@ -250,7 +250,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientException()
     {
@@ -266,7 +266,7 @@ final class Stack
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getResponseCode()
     {
@@ -282,7 +282,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestHost()
     {
@@ -298,7 +298,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestScheme()
     {
@@ -340,7 +340,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCurlCommand()
     {
