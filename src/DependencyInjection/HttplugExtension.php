@@ -542,7 +542,7 @@ class HttplugExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration(array $config, ContainerBuilder $container): ?ConfigurationInterface
+    public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
         return new Configuration($container->getParameter('kernel.debug'));
     }
