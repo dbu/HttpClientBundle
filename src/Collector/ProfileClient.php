@@ -27,7 +27,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
     use VersionBridgeClient;
 
     /**
-     * @var ClientInterface|HttpAsyncClient
+     * @var ClientInterface&HttpAsyncClient
      */
     private $client;
 
