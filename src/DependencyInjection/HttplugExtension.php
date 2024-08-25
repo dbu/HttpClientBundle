@@ -195,7 +195,7 @@ class HttplugExtension extends Extension
      * @param ContainerBuilder $container In case we need to add additional services for this plugin
      * @param string           $serviceId service id of the plugin, in case we need to add additional services for this plugin
      */
-    private function configurePluginByName($name, Definition $definition, array $config, ContainerBuilder $container, $serviceId): void
+    private function configurePluginByName(string $name, Definition $definition, array $config, ContainerBuilder $container, string $serviceId): void
     {
         switch ($name) {
             case 'cache':
@@ -398,10 +398,7 @@ class HttplugExtension extends Extension
         return $pluginServices;
     }
 
-    /**
-     * @param string $clientName
-     */
-    private function configureClient(ContainerBuilder $container, $clientName, array $arguments): void
+    private function configureClient(ContainerBuilder $container, string $clientName, array $arguments): void
     {
         $serviceId = 'httplug.client.'.$clientName;
 
@@ -499,7 +496,7 @@ class HttplugExtension extends Extension
      * @param string $serviceId Name of the private service to create
      * @param string $uri       String representation of the URI
      */
-    private function createUri(ContainerBuilder $container, $serviceId, $uri): void
+    private function createUri(ContainerBuilder $container, string $serviceId, string $uri): void
     {
         $container
             ->register($serviceId, UriInterface::class)
@@ -555,12 +552,9 @@ class HttplugExtension extends Extension
     /**
      * Configure a plugin using the parent definition from plugins.xml.
      *
-     * @param string $serviceId
-     * @param string $pluginName
-     *
      * @return string configured service id
      */
-    private function configurePlugin(ContainerBuilder $container, $serviceId, $pluginName, array $pluginConfig): string
+    private function configurePlugin(ContainerBuilder $container, string $serviceId, string $pluginName, array $pluginConfig): string
     {
         $pluginServiceId = $serviceId.'.plugin.'.$pluginName;
 
@@ -572,7 +566,7 @@ class HttplugExtension extends Extension
         return $pluginServiceId;
     }
 
-    private function configureVcrPlugin(ContainerBuilder $container, array $config, $prefix): array
+    private function configureVcrPlugin(ContainerBuilder $container, array $config, string $prefix): array
     {
         $recorder = $config['recorder'];
         $recorderId = in_array($recorder, ['filesystem', 'in_memory']) ? 'httplug.plugin.vcr.recorder.'.$recorder : $recorder;

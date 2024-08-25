@@ -520,7 +520,7 @@ class Configuration implements ConfigurationInterface
      * @param ArrayNodeDefinition $pluginNode the node to add to
      * @param bool                $disableAll Some shared plugins are enabled by default. On the client, all are disabled by default.
      */
-    private function addSharedPluginNodes(ArrayNodeDefinition $pluginNode, $disableAll = false): void
+    private function addSharedPluginNodes(ArrayNodeDefinition $pluginNode, bool $disableAll = false): void
     {
         $children = $pluginNode->children();
 
@@ -696,7 +696,7 @@ class Configuration implements ConfigurationInterface
      *
      * @throws InvalidConfigurationException If $actual does not have exactly the keys specified in $expected (plus 'type')
      */
-    private function validateAuthenticationType(array $expected, array $actual, $authName): void
+    private function validateAuthenticationType(array $expected, array $actual, string $authName): void
     {
         unset($actual['type']);
         // Empty array is always provided, even if the config is not filled.
