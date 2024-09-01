@@ -13,16 +13,12 @@ namespace Http\HttplugBundle\Collector;
  */
 final class Stack
 {
-    private string $client;
-
     private ?Stack $parent = null;
 
     /**
      * @var Profile[]
      */
     private array $profiles = [];
-
-    private string $request;
 
     private ?string $response = null;
 
@@ -50,10 +46,10 @@ final class Stack
 
     private ?string $curlCommand = null;
 
-    public function __construct(string $client, string $request)
-    {
-        $this->client = $client;
-        $this->request = $request;
+    public function __construct(
+        private readonly string $client,
+        private readonly string $request,
+    ) {
     }
 
     /**
