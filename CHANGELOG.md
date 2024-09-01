@@ -4,6 +4,14 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 1
 
+# 1.34.3 - 2024-09-01
+
+- Same as 1.34.2 but tagged on the 1.x banch instead of the feature branch.
+
+# 1.34.2 - 2024-09-01
+
+- More cleanup of the rate-limiter configuration. The service name is the full service name of the rate limiter, e.g. `limiter.my_name` when configuring `framework.rate_limiter.my_name`.
+
 # 1.34.1 - 2024-09-01
 
 - The rate-limiter name in the throttle plugin configuration is required.
