@@ -611,7 +611,7 @@ class Configuration implements ConfigurationInterface
         ->end();
         // End stopwatch plugin
 
-        $error = $children->arrayNode('error')
+        $children->arrayNode('error')
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
@@ -620,11 +620,14 @@ class Configuration implements ConfigurationInterface
         ->end();
         // End error plugin
 
-        $throttle = $children->arrayNode('throttle')
+        $children->arrayNode('throttle')
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('name')->end()
+                ->scalarNode('name')
+                    ->info('The name of the configured symfony/rate-limiter to use')
+                    ->isRequired()
+                ->end()
                 ->scalarNode('key')->defaultNull()->end()
                 ->integerNode('tokens')->defaultValue(1)->end()
                 ->floatNode('max_time')->defaultNull()->end()
