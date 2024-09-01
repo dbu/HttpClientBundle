@@ -13,9 +13,9 @@ namespace Http\HttplugBundle\Collector;
  */
 final class Profile
 {
-    private string $request;
+    private ?string $request = null;
 
-    private string $response;
+    private ?string $response = null;
 
     private bool $failed = false;
 
@@ -32,7 +32,7 @@ final class Profile
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequest()
     {
@@ -48,7 +48,7 @@ final class Profile
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getResponse()
     {
