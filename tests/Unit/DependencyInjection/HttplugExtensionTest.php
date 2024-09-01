@@ -145,7 +145,9 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                             'response_seekable_body' => true,
                         ],
                         [
-                            'throttle' => true,
+                            'throttle' => [
+                                'name' => 'test',
+                            ],
                         ],
                         [
                             'authentication' => [
