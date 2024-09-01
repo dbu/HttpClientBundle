@@ -51,6 +51,7 @@
     },
     "require-dev": {
         "guzzlehttp/psr7": "^1.7 || ^2.0",
+        "matthiasnoback/symfony-config-test": "^5.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.0 || ^5.0",
         "nyholm/nsa": "^1.1",
         "nyholm/psr7": "^1.2.1",
