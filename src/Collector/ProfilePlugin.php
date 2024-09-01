@@ -20,8 +20,11 @@ class ProfilePlugin implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 
-    public function __construct(private Plugin $plugin, private Collector $collector, private Formatter $formatter)
-    {
+    public function __construct(
+        private readonly Plugin $plugin,
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+    ) {
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)

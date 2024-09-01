@@ -20,11 +20,11 @@ class StackPlugin implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 
-    /**
-     * @param string $client
-     */
-    public function __construct(private Collector $collector, private Formatter $formatter, private $client)
-    {
+    public function __construct(
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly string $client,
+    ) {
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
