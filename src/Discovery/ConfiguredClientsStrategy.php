@@ -21,7 +21,7 @@ class ConfiguredClientsStrategy implements DiscoveryStrategy
 
     private static ?HttpAsyncClient $asyncClient = null;
 
-    public function __construct(ClientInterface $httpClient = null, HttpAsyncClient $asyncClient = null)
+    public function __construct(?ClientInterface $httpClient = null, ?HttpAsyncClient $asyncClient = null)
     {
         self::$client = $httpClient;
         self::$asyncClient = $asyncClient;

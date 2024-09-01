@@ -13,6 +13,7 @@ return (new PhpCsFixer\Config())
         'array_syntax' => ['syntax' => 'short'],
         'declare_strict_types' => true,
         'single_line_throw' => false,
+        'nullable_type_declaration_for_default_null_value' => true,
         'visibility_required' => [
             'elements' => [
                 'const',
