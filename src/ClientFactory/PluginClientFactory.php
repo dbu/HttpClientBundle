@@ -19,14 +19,13 @@ use Http\Client\Common\PluginClient;
 final class PluginClientFactory
 {
     /**
-     * @param Plugin[]               $plugins
-     * @param ClientFactory|callable $factory
-     * @param array                  $config              config to the client factory
-     * @param array                  $pluginClientOptions config forwarded to the PluginClient
+     * @param Plugin[] $plugins
+     * @param array    $config              config to the client factory
+     * @param array    $pluginClientOptions config forwarded to the PluginClient
      *
      * @return PluginClient
      */
-    public static function createPluginClient(array $plugins, $factory, array $config, array $pluginClientOptions = [])
+    public static function createPluginClient(array $plugins, ClientFactory|callable $factory, array $config, array $pluginClientOptions = [])
     {
         if ($factory instanceof ClientFactory) {
             $client = $factory->createClient($config);
