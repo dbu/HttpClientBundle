@@ -9,6 +9,8 @@ use Http\Message\MessageFactory;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class SocketFactory implements ClientFactory
 {
