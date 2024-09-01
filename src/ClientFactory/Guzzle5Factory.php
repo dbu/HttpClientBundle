@@ -10,6 +10,8 @@ use Http\Message\MessageFactory;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class Guzzle5Factory implements ClientFactory
 {

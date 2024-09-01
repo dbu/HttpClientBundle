@@ -11,6 +11,8 @@ use Symfony\Component\HttpClient\HttplugClient;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class SymfonyFactory implements ClientFactory
 {

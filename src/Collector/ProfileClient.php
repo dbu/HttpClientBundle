@@ -22,6 +22,7 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
+ * @final
  */
 class ProfileClient implements HttpClient, HttpAsyncClient
 {
