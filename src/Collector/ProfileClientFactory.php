@@ -27,8 +27,12 @@ class ProfileClientFactory implements ClientFactory
     /**
      * @param ClientFactory|callable $factory
      */
-    public function __construct($factory, private readonly Collector $collector, private readonly Formatter $formatter, private readonly Stopwatch $stopwatch)
-    {
+    public function __construct(
+        $factory,
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly Stopwatch $stopwatch
+    ) {
         if (!$factory instanceof ClientFactory && !is_callable($factory)) {
             throw new \RuntimeException(sprintf('First argument to ProfileClientFactory::__construct must be a "%s" or a callable.', ClientFactory::class));
         }

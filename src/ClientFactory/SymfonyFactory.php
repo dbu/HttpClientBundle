@@ -14,8 +14,10 @@ use Symfony\Component\HttpClient\HttplugClient;
  */
 class SymfonyFactory implements ClientFactory
 {
-    public function __construct(private readonly ResponseFactoryInterface $responseFactory, private readonly StreamFactoryInterface $streamFactory)
-    {
+    public function __construct(
+        private readonly ResponseFactoryInterface $responseFactory,
+        private readonly StreamFactoryInterface $streamFactory
+    ) {
     }
 
     public function createClient(array $config = [])

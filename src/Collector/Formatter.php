@@ -22,8 +22,10 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Formatter implements MessageFormatter
 {
-    public function __construct(private readonly MessageFormatter $formatter, private readonly MessageFormatter $curlFormatter)
-    {
+    public function __construct(
+        private readonly MessageFormatter $formatter,
+        private readonly MessageFormatter $curlFormatter,
+    ) {
     }
 
     /**

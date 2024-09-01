@@ -36,8 +36,12 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
      * @param ClientInterface|HttpAsyncClient $client The client to profile. Client must implement HttpClient or
      *                                                HttpAsyncClient interface.
      */
-    public function __construct($client, private readonly Collector $collector, private readonly Formatter $formatter, private readonly Stopwatch $stopwatch)
-    {
+    public function __construct(
+        $client,
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly Stopwatch $stopwatch
+    ) {
         if (!($client instanceof ClientInterface && $client instanceof HttpAsyncClient)) {
             $client = new FlexibleHttpClient($client);
         }
