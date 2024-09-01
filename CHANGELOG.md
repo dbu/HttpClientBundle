@@ -4,6 +4,10 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 1
 
+# 1.34.1 - 2024-09-01
+
+- The rate-limiter name in the throttle plugin configuration is required.
+
 # 1.34.0 - 2024-06-17
 
 - Support to configure the throttle plugin.
