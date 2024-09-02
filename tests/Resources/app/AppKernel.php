@@ -14,24 +14,21 @@ use Symfony\Component\Routing\RouteCollection;
 
 class AppKernel extends Kernel
 {
-    /**
-     * @var string
-     */
-    private static $cacheDir;
+    private static ?string $cacheDir = null;
 
     public function registerBundles(): iterable
     {
         return [
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Http\HttplugBundle\HttplugBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
             new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
         ];
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
-        $loader->load(function (ContainerBuilder $container) use ($loader) {
+        $loader->load(function (ContainerBuilder $container) use ($loader): void {
             $container->loadFromExtension('framework', [
                 'router' => [
                     'resource' => 'kernel::loadRoutes',
@@ -60,7 +57,7 @@ class AppKernel extends Kernel
 
     public function loadRoutes(LoaderInterface $loader): RouteCollection
     {
-        $file = (new \ReflectionObject($this))->getFileName();
+        $file = (new ReflectionObject($this))->getFileName();
         /* @var RoutingPhpFileLoader $kernelLoader */
         $kernelLoader = $loader->getResolver()->resolve($file, 'php');
         $kernelLoader->setCurrentDir(\dirname($file));

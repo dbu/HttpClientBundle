@@ -13,32 +13,14 @@ namespace Http\HttplugBundle\Collector;
  */
 final class Profile
 {
-    /**
-     * @var string
-     */
-    private $plugin;
+    private ?string $request = null;
 
-    /**
-     * @var string
-     */
-    private $request;
+    private ?string $response = null;
 
-    /**
-     * @var string
-     */
-    private $response;
+    private bool $failed = false;
 
-    /**
-     * @var bool
-     */
-    private $failed = false;
-
-    /**
-     * @param string $plugin
-     */
-    public function __construct($plugin)
+    public function __construct(private readonly string $plugin)
     {
-        $this->plugin = $plugin;
     }
 
     /**
@@ -50,7 +32,7 @@ final class Profile
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequest()
     {
@@ -66,7 +48,7 @@ final class Profile
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getResponse()
     {

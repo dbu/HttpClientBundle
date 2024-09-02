@@ -20,26 +20,11 @@ use Symfony\Component\Stopwatch\Stopwatch;
  */
 final class PluginClientFactory
 {
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
-     * @var Stopwatch
-     */
-    private $stopwatch;
-
-    public function __construct(Collector $collector, Formatter $formatter, Stopwatch $stopwatch)
-    {
-        $this->collector = $collector;
-        $this->formatter = $formatter;
-        $this->stopwatch = $stopwatch;
+    public function __construct(
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly Stopwatch $stopwatch
+    ) {
     }
 
     /**
@@ -56,9 +41,7 @@ final class PluginClientFactory
      */
     public function createClient($client, array $plugins = [], array $options = [])
     {
-        $plugins = array_map(function (Plugin $plugin) {
-            return new ProfilePlugin($plugin, $this->collector, $this->formatter);
-        }, $plugins);
+        $plugins = array_map(fn (Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter), $plugins);
 
         $clientName = $options['client_name'] ?? 'Default';
         array_unshift($plugins, new StackPlugin($this->collector, $this->formatter, $clientName));

@@ -13,99 +13,43 @@ namespace Http\HttplugBundle\Collector;
  */
 final class Stack
 {
-    /**
-     * @var string
-     */
-    private $client;
-
-    /**
-     * @var Stack
-     */
-    private $parent;
+    private ?Stack $parent = null;
 
     /**
      * @var Profile[]
      */
-    private $profiles = [];
+    private array $profiles = [];
 
-    /**
-     * @var string
-     */
-    private $request;
+    private ?string $response = null;
 
-    /**
-     * @var string
-     */
-    private $response;
+    private bool $failed = false;
 
-    /**
-     * @var bool
-     */
-    private $failed = false;
+    private ?string $requestTarget = null;
 
-    /**
-     * @var string
-     */
-    private $requestTarget;
+    private ?string $requestMethod = null;
 
-    /**
-     * @var string
-     */
-    private $requestMethod;
+    private ?string $requestHost = null;
 
-    /**
-     * @var string
-     */
-    private $requestHost;
+    private ?string $requestScheme = null;
 
-    /**
-     * @var string
-     */
-    private $requestScheme;
+    private ?int $requestPort = null;
 
-    /**
-     * @var int|null
-     */
-    private $requestPort;
+    private ?string $clientRequest = null;
 
-    /**
-     * @var string
-     */
-    private $clientRequest;
+    private ?string $clientResponse = null;
 
-    /**
-     * @var string
-     */
-    private $clientResponse;
+    private ?string $clientException = null;
 
-    /**
-     * @var string
-     */
-    private $clientException;
+    private ?int $responseCode = null;
 
-    /**
-     * @var int
-     */
-    private $responseCode;
+    private int $duration = 0;
 
-    /**
-     * @var int
-     */
-    private $duration = 0;
+    private ?string $curlCommand = null;
 
-    /**
-     * @var string
-     */
-    private $curlCommand;
-
-    /**
-     * @param string $client
-     * @param string $request
-     */
-    public function __construct($client, $request)
-    {
-        $this->client = $client;
-        $this->request = $request;
+    public function __construct(
+        private readonly string $client,
+        private readonly string $request,
+    ) {
     }
 
     /**
@@ -117,16 +61,13 @@ final class Stack
     }
 
     /**
-     * @return Stack
+     * @return Stack|null
      */
     public function getParent()
     {
         return $this->parent;
     }
 
-    /**
-     * @param Stack $parent
-     */
     public function setParent(self $parent)
     {
         $this->parent = $parent;
@@ -154,7 +95,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getResponse()
     {
@@ -186,7 +127,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestTarget()
     {
@@ -202,7 +143,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestMethod()
     {
@@ -218,7 +159,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientRequest()
     {
@@ -234,7 +175,7 @@ final class Stack
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getClientResponse()
     {
@@ -242,7 +183,7 @@ final class Stack
     }
 
     /**
-     * @param mixed $clientResponse
+     * @param string $clientResponse
      */
     public function setClientResponse($clientResponse)
     {
@@ -250,7 +191,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientException()
     {
@@ -266,7 +207,7 @@ final class Stack
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getResponseCode()
     {
@@ -282,7 +223,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestHost()
     {
@@ -298,7 +239,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestScheme()
     {
@@ -340,7 +281,7 @@ final class Stack
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCurlCommand()
     {

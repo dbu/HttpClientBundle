@@ -11,9 +11,6 @@ use Http\Adapter\React\Client;
  */
 class ReactFactory implements ClientFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists('Http\Adapter\React\Client')) {

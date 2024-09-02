@@ -24,38 +24,15 @@ class ProfileClientFactory implements ClientFactory
      */
     private $factory;
 
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
-     * @var Stopwatch
-     */
-    private $stopwatch;
-
-    /**
-     * @param ClientFactory|callable $factory
-     */
-    public function __construct($factory, Collector $collector, Formatter $formatter, Stopwatch $stopwatch)
-    {
-        if (!$factory instanceof ClientFactory && !is_callable($factory)) {
-            throw new \RuntimeException(sprintf('First argument to ProfileClientFactory::__construct must be a "%s" or a callable.', ClientFactory::class));
-        }
+    public function __construct(
+        ClientFactory|callable $factory,
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly Stopwatch $stopwatch
+    ) {
         $this->factory = $factory;
-        $this->collector = $collector;
-        $this->formatter = $formatter;
-        $this->stopwatch = $stopwatch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         $client = is_callable($this->factory) ? call_user_func($this->factory, $config) : $this->factory->createClient($config);

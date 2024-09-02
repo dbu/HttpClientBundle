@@ -8,7 +8,6 @@ use Exception;
 use Http\Client\Exception\HttpException;
 use Http\Client\Exception\TransferException;
 use Http\Message\Formatter as MessageFormatter;
-use Http\Message\Formatter\CurlCommandFormatter;
 use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -23,20 +22,10 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Formatter implements MessageFormatter
 {
-    /**
-     * @var MessageFormatter
-     */
-    private $formatter;
-
-    /**
-     * @var CurlCommandFormatter
-     */
-    private $curlFormatter;
-
-    public function __construct(MessageFormatter $formatter, MessageFormatter $curlFormatter)
-    {
-        $this->formatter = $formatter;
-        $this->curlFormatter = $curlFormatter;
+    public function __construct(
+        private readonly MessageFormatter $formatter,
+        private readonly MessageFormatter $curlFormatter,
+    ) {
     }
 
     /**
@@ -54,12 +43,9 @@ class Formatter implements MessageFormatter
             return sprintf('Transfer error: %s', $exception->getMessage());
         }
 
-        return sprintf('Unexpected exception of type "%s": %s', get_class($exception), $exception->getMessage());
+        return sprintf('Unexpected exception of type "%s": %s', $exception::class, $exception->getMessage());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function formatRequest(RequestInterface $request)
     {
         return $this->formatter->formatRequest($request);

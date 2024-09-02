@@ -12,10 +12,7 @@ use Psr\Http\Client\ClientInterface;
  */
 final class MockFactory implements ClientFactory
 {
-    /**
-     * @var ClientInterface
-     */
-    private $client;
+    private ?ClientInterface $client = null;
 
     /**
      * Set the client instance that this factory should return.
@@ -27,9 +24,6 @@ final class MockFactory implements ClientFactory
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists(Client::class)) {

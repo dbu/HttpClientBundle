@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\HttplugBundle\Collector;
 
-use Exception;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,31 +20,16 @@ class ProfilePlugin implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 
-    /**
-     * @var Plugin
-     */
-    private $plugin;
-
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    public function __construct(Plugin $plugin, Collector $collector, Formatter $formatter)
-    {
-        $this->plugin = $plugin;
-        $this->collector = $collector;
-        $this->formatter = $formatter;
+    public function __construct(
+        private readonly Plugin $plugin,
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+    ) {
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $profile = new Profile(get_class($this->plugin));
+        $profile = new Profile($this->plugin::class);
 
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
@@ -69,7 +53,7 @@ class ProfilePlugin implements Plugin
 
         try {
             $promise = $this->plugin->handleRequest($request, $wrappedNext, $wrappedFirst);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->onException($request, $profile, $e, $stack);
 
             throw $e;
@@ -79,7 +63,7 @@ class ProfilePlugin implements Plugin
             $this->onOutgoingResponse($response, $profile, $request, $stack);
 
             return $response;
-        }, function (Exception $exception) use ($profile, $request, $stack) {
+        }, function (\Exception $exception) use ($profile, $request, $stack): void {
             $this->onException($request, $profile, $exception, $stack);
 
             throw $exception;
@@ -89,7 +73,7 @@ class ProfilePlugin implements Plugin
     private function onException(
         RequestInterface $request,
         Profile $profile,
-        Exception $exception,
+        \Exception $exception,
         Stack $stack
     ): void {
         $profile->setFailed(true);

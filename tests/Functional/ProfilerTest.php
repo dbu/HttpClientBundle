@@ -22,7 +22,7 @@ class ProfilerTest extends WebTestCase
 
         $httpClient->sendRequest(new Request('GET', '/posts/1'));
 
-        //Browse any page to get a profile
+        // Browse any page to get a profile
         $client->request('GET', '/');
 
         $client->request('GET', '/_profiler/latest?panel=httplug');

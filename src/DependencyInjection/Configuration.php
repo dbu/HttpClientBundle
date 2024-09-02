@@ -38,10 +38,8 @@ class Configuration implements ConfigurationInterface
      * Whether to use the debug mode.
      *
      * @see https://github.com/doctrine/DoctrineBundle/blob/v1.5.2/DependencyInjection/Configuration.php#L31-L41
-     *
-     * @var bool
      */
-    private $debug;
+    private bool $debug;
 
     /**
      * @param bool $debug
@@ -51,9 +49,6 @@ class Configuration implements ConfigurationInterface
         $this->debug = (bool) $debug;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('httplug');
@@ -64,13 +59,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->validate()
-                ->ifTrue(function ($v) {
-                    return !empty($v['classes']['client'])
-                        || !empty($v['classes']['psr17_request_factory'])
-                        || !empty($v['classes']['psr17_response_factory'])
-                        || !empty($v['classes']['psr17_uri_factory'])
-                        || !empty($v['classes']['psr17_stream_factory']);
-                })
+                ->ifTrue(fn ($v) => !empty($v['classes']['client'])
+                    || !empty($v['classes']['psr17_request_factory'])
+                    || !empty($v['classes']['psr17_response_factory'])
+                    || !empty($v['classes']['psr17_uri_factory'])
+                    || !empty($v['classes']['psr17_stream_factory']))
                 ->then(function ($v) {
                     foreach ($v['classes'] as $key => $class) {
                         if (null !== $class && !class_exists($class)) {
@@ -86,9 +79,7 @@ class Configuration implements ConfigurationInterface
                 })
             ->end()
             ->beforeNormalization()
-                ->ifTrue(function ($v) {
-                    return is_array($v) && array_key_exists('toolbar', $v) && is_array($v['toolbar']);
-                })
+                ->ifTrue(fn ($v) => is_array($v) && array_key_exists('toolbar', $v) && is_array($v['toolbar']))
                 ->then(function ($v) {
                     if (array_key_exists('profiling', $v)) {
                         throw new InvalidConfigurationException('Can\'t configure both "toolbar" and "profiling" section. The "toolbar" config is deprecated as of version 1.3.0, please only use "profiling".');
@@ -156,9 +147,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('formatter')->defaultNull()->end()
                         ->scalarNode('captured_body_length')
                             ->validate()
-                                ->ifTrue(function ($v) {
-                                    return null !== $v && !is_int($v);
-                                })
+                                ->ifTrue(fn ($v) => null !== $v && !is_int($v))
                                 ->thenInvalid('The child node "captured_body_length" at path "httplug.profiling" must be an integer or null ("%s" given).')
                             ->end()
                             ->defaultValue(0)
@@ -193,22 +182,17 @@ class Configuration implements ConfigurationInterface
                 ->prototype('array')
                 ->fixXmlConfig('plugin')
                 ->validate()
-                    ->ifTrue(function ($config) {
+                    ->ifTrue(fn ($config) =>
                         // Make sure we only allow one of these to be true
-                        return (bool) $config['flexible_client'] + (bool) $config['http_methods_client'] + (bool) $config['batch_client'] >= 2;
-                    })
+                        (bool) $config['flexible_client'] + (bool) $config['http_methods_client'] + (bool) $config['batch_client'] >= 2)
                     ->thenInvalid('A http client can\'t be decorated with several of FlexibleHttpClient, HttpMethodsClient and BatchClient. Only one of the following options can be true. ("flexible_client", "http_methods_client", "batch_client")')
                 ->end()
                 ->validate()
-                    ->ifTrue(function ($config) {
-                        return 'httplug.factory.auto' === $config['factory'] && !empty($config['config']);
-                    })
+                    ->ifTrue(fn ($config) => 'httplug.factory.auto' === $config['factory'] && !empty($config['config']))
                     ->thenInvalid('If you want to use the "config" key you must also specify a valid "factory".')
                 ->end()
                 ->validate()
-                    ->ifTrue(function ($config) {
-                        return !empty($config['service']) && ('httplug.factory.auto' !== $config['factory'] || !empty($config['config']));
-                    })
+                    ->ifTrue(fn ($config) => !empty($config['service']) && ('httplug.factory.auto' !== $config['factory'] || !empty($config['config'])))
                     ->thenInvalid('If you want to use the "service" key you cannot specify "factory" or "config".')
                 ->end()
                 ->children()
@@ -469,9 +453,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->info('Record response to be replayed during tests or development cycle.')
                     ->validate()
-                        ->ifTrue(function ($config) {
-                            return 'filesystem' === $config['recorder'] && empty($config['fixtures_directory']);
-                        })
+                        ->ifTrue(fn ($config) => 'filesystem' === $config['recorder'] && empty($config['fixtures_directory']))
                         ->thenInvalid('If you want to use the "filesystem" recorder you must also specify a "fixtures_directory".')
                     ->end()
                     ->children()
@@ -520,7 +502,7 @@ class Configuration implements ConfigurationInterface
      * @param ArrayNodeDefinition $pluginNode the node to add to
      * @param bool                $disableAll Some shared plugins are enabled by default. On the client, all are disabled by default.
      */
-    private function addSharedPluginNodes(ArrayNodeDefinition $pluginNode, $disableAll = false): void
+    private function addSharedPluginNodes(ArrayNodeDefinition $pluginNode, bool $disableAll = false): void
     {
         $children = $pluginNode->children();
 
@@ -637,32 +619,15 @@ class Configuration implements ConfigurationInterface
                 ->validate()
                     ->always()
                     ->then(function ($config) {
-                        switch ($config['type']) {
-                            case 'basic':
-                                $this->validateAuthenticationType(['username', 'password'], $config, 'basic');
-
-                                break;
-                            case 'bearer':
-                                $this->validateAuthenticationType(['token'], $config, 'bearer');
-
-                                break;
-                            case 'service':
-                                $this->validateAuthenticationType(['service'], $config, 'service');
-
-                                break;
-                            case 'wsse':
-                                $this->validateAuthenticationType(['username', 'password'], $config, 'wsse');
-
-                                break;
-                            case 'query_param':
-                                $this->validateAuthenticationType(['params'], $config, 'query_param');
-
-                                break;
-                            case 'header':
-                                $this->validateAuthenticationType(['header_name', 'header_value'], $config, 'header');
-
-                                break;
-                        }
+                        match ($config['type']) {
+                            'basic' => $this->validateAuthenticationType(['username', 'password'], $config, 'basic'),
+                            'bearer' => $this->validateAuthenticationType(['token'], $config, 'bearer'),
+                            'service' => $this->validateAuthenticationType(['service'], $config, 'service'),
+                            'wsse' => $this->validateAuthenticationType(['username', 'password'], $config, 'wsse'),
+                            'query_param' => $this->validateAuthenticationType(['params'], $config, 'query_param'),
+                            'header' => $this->validateAuthenticationType(['header_name', 'header_value'], $config, 'header'),
+                            default => $config,
+                        };
 
                         return $config;
                     })
@@ -696,7 +661,7 @@ class Configuration implements ConfigurationInterface
      *
      * @throws InvalidConfigurationException If $actual does not have exactly the keys specified in $expected (plus 'type')
      */
-    private function validateAuthenticationType(array $expected, array $actual, $authName): void
+    private function validateAuthenticationType(array $expected, array $actual, string $authName): void
     {
         unset($actual['type']);
         // Empty array is always provided, even if the config is not filled.
@@ -735,10 +700,9 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('cache_listener')
             ->addDefaultsIfNotSet()
             ->validate()
-                ->ifTrue(function ($config) {
+                ->ifTrue(fn ($config) =>
                     // Cannot set both respect_cache_headers and respect_response_cache_directives
-                    return isset($config['respect_cache_headers'], $config['respect_response_cache_directives']);
-                })
+                    isset($config['respect_cache_headers'], $config['respect_response_cache_directives']))
                 ->thenInvalid('You can\'t provide config option "respect_cache_headers" and "respect_response_cache_directives" simultaneously. Use "respect_response_cache_directives" instead.')
             ->end()
             ->children()
@@ -748,18 +712,14 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('cache_lifetime')
                     ->info('The minimum time we should store a cache item')
                     ->validate()
-                    ->ifTrue(function ($v) {
-                        return null !== $v && !is_int($v);
-                    })
+                    ->ifTrue(fn ($v) => null !== $v && !is_int($v))
                     ->thenInvalid('cache_lifetime must be an integer or null, got %s')
                     ->end()
                 ->end()
                 ->scalarNode('default_ttl')
                     ->info('The default max age of a Response')
                     ->validate()
-                        ->ifTrue(function ($v) {
-                            return null !== $v && !is_int($v);
-                        })
+                        ->ifTrue(fn ($v) => null !== $v && !is_int($v))
                         ->thenInvalid('default_ttl must be an integer or null, got %s')
                     ->end()
                 ->end()
@@ -771,9 +731,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->prototype('scalar')
                         ->validate()
-                            ->ifTrue(function ($v) {
-                                return false === @preg_match($v, '');
-                            })
+                            ->ifTrue(fn ($v) => false === @preg_match($v, ''))
                             ->thenInvalid('Invalid regular expression for a blacklisted path: %s')
                         ->end()
                     ->end()
@@ -788,10 +746,9 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(['GET', 'HEAD'])
                     ->prototype('scalar')
                         ->validate()
-                            ->ifTrue(function ($v) {
+                            ->ifTrue(fn ($v) =>
                                 /* RFC7230 sections 3.1.1 and 3.2.6 except limited to uppercase characters. */
-                                return preg_match('/[^A-Z0-9!#$%&\'*+\-.^_`|~]+/', $v);
-                            })
+                                preg_match('/[^A-Z0-9!#$%&\'*+\-.^_`|~]+/', (string) $v))
                             ->thenInvalid('Invalid method: %s')
                         ->end()
                     ->end()
@@ -839,9 +796,7 @@ class Configuration implements ConfigurationInterface
             ->info('Configure HTTP caching, requires the php-http/cache-plugin package')
             ->addDefaultsIfNotSet()
             ->validate()
-                ->ifTrue(function ($v) {
-                    return !empty($v['enabled']) && !class_exists(CachePlugin::class);
-                })
+                ->ifTrue(fn ($v) => !empty($v['enabled']) && !class_exists(CachePlugin::class))
                 ->thenInvalid('To use the cache plugin, you need to require php-http/cache-plugin in your project')
             ->end()
             ->children()

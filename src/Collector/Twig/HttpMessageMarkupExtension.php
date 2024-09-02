@@ -16,15 +16,9 @@ use Twig\TwigFilter;
  */
 class HttpMessageMarkupExtension extends AbstractExtension
 {
-    /**
-     * @var ClonerInterface
-     */
-    private $cloner;
+    private ClonerInterface $cloner;
 
-    /**
-     * @var HtmlDumper
-     */
-    private $dumper;
+    private DataDumperInterface $dumper;
 
     public function __construct(?ClonerInterface $cloner = null, ?DataDumperInterface $dumper = null)
     {
@@ -33,15 +27,13 @@ class HttpMessageMarkupExtension extends AbstractExtension
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array
      */
     public function getFilters()
     {
         return [
-            new TwigFilter('httplug_markup', [$this, 'markup'], ['is_safe' => ['html']]),
-            new TwigFilter('httplug_markup_body', [$this, 'markupBody'], ['is_safe' => ['html']]),
+            new TwigFilter('httplug_markup', $this->markup(...), ['is_safe' => ['html']]),
+            new TwigFilter('httplug_markup_body', $this->markupBody(...), ['is_safe' => ['html']]),
         ];
     }
 

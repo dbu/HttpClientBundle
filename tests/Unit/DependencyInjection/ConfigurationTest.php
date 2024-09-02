@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  */
 class ConfigurationTest extends AbstractExtensionConfigurationTestCase
 {
-    private $emptyConfig = [
+    private array $emptyConfig = [
         'default_client_autowiring' => true,
         'main_alias' => [
             'client' => 'httplug.client.default',
@@ -300,9 +300,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             ],
         ];
 
-        $formats = array_map(function ($path) {
-            return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, [
+        $formats = array_map(fn ($path) => __DIR__.'/../../Resources/Fixtures/'.$path, [
             'config/full.yml',
             'config/full.xml',
             'config/full.php',
@@ -357,9 +355,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
      */
     public function testBackwardCompatibility(): void
     {
-        $formats = array_map(function ($path) {
-            return __DIR__.'/../../Resources/Fixtures/'.$path;
-        }, [
+        $formats = array_map(fn ($path) => __DIR__.'/../../Resources/Fixtures/'.$path, [
             'config/bc/toolbar.yml',
             'config/bc/toolbar_auto.yml',
         ]);

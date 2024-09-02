@@ -24,20 +24,11 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class ProfilingTest extends TestCase
 {
-    /**
-     * @var Collector
-     */
-    private $collector;
+    private Collector $collector;
 
-    /**
-     * @var Formatter
-     */
-    private $formatter;
+    private Formatter $formatter;
 
-    /**
-     * @var Stopwatch
-     */
-    private $stopwatch;
+    private Stopwatch $stopwatch;
 
     public function setUp(): void
     {
@@ -106,9 +97,7 @@ class ProfilingTest extends TestCase
 
     private function createClient(array $plugins, $clientName = 'Acme', array $clientOptions = [])
     {
-        $plugins = array_map(function (Plugin $plugin) {
-            return new ProfilePlugin($plugin, $this->collector, $this->formatter, get_class($plugin));
-        }, $plugins);
+        $plugins = array_map(fn (Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter, $plugin::class), $plugins);
 
         array_unshift($plugins, new StackPlugin($this->collector, $this->formatter, $clientName));
 

@@ -30,9 +30,9 @@ use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Twig\Environment as TwigEnvironment;
 
 /**
@@ -45,10 +45,8 @@ class HttplugExtension extends Extension
 
     /**
      * Used to check is the VCR plugin is installed.
-     *
-     * @var bool
      */
-    private $useVcrPlugin = false;
+    private bool $useVcrPlugin = false;
 
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -191,11 +189,10 @@ class HttplugExtension extends Extension
     }
 
     /**
-     * @param string           $name
      * @param ContainerBuilder $container In case we need to add additional services for this plugin
      * @param string           $serviceId service id of the plugin, in case we need to add additional services for this plugin
      */
-    private function configurePluginByName($name, Definition $definition, array $config, ContainerBuilder $container, $serviceId): void
+    private function configurePluginByName(string $name, Definition $definition, array $config, ContainerBuilder $container, string $serviceId): void
     {
         switch ($name) {
             case 'cache':
@@ -211,9 +208,7 @@ class HttplugExtension extends Extension
                     unset($options['blacklisted_paths']);
                 }
 
-                $options['cache_listeners'] = array_map(function (string $serviceName): Reference {
-                    return new Reference($serviceName);
-                }, $options['cache_listeners']);
+                $options['cache_listeners'] = array_map(fn (string $serviceName): Reference => new Reference($serviceName), $options['cache_listeners']);
 
                 if (0 === count($options['cache_listeners'])) {
                     unset($options['cache_listeners']);
@@ -284,7 +279,7 @@ class HttplugExtension extends Extension
 
                 break;
 
-            /* client specific plugins */
+                /* client specific plugins */
 
             case 'add_host':
                 $hostUriService = $serviceId.'.host_uri';
@@ -398,10 +393,7 @@ class HttplugExtension extends Extension
         return $pluginServices;
     }
 
-    /**
-     * @param string $clientName
-     */
-    private function configureClient(ContainerBuilder $container, $clientName, array $arguments): void
+    private function configureClient(ContainerBuilder $container, string $clientName, array $arguments): void
     {
         $serviceId = 'httplug.client.'.$clientName;
 
@@ -446,9 +438,7 @@ class HttplugExtension extends Extension
             ->addArgument(new Reference($serviceId.'.client'))
             ->addArgument(
                 array_map(
-                    function ($id) {
-                        return new Reference($id);
-                    },
+                    fn ($id) => new Reference($id),
                     $plugins
                 )
             )
@@ -499,7 +489,7 @@ class HttplugExtension extends Extension
      * @param string $serviceId Name of the private service to create
      * @param string $uri       String representation of the URI
      */
-    private function createUri(ContainerBuilder $container, $serviceId, $uri): void
+    private function createUri(ContainerBuilder $container, string $serviceId, string $uri): void
     {
         $container
             ->register($serviceId, UriInterface::class)
@@ -544,10 +534,7 @@ class HttplugExtension extends Extension
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfiguration(array $config, ContainerBuilder $container): ?ConfigurationInterface
+    public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
         return new Configuration($container->getParameter('kernel.debug'));
     }
@@ -555,12 +542,9 @@ class HttplugExtension extends Extension
     /**
      * Configure a plugin using the parent definition from plugins.xml.
      *
-     * @param string $serviceId
-     * @param string $pluginName
-     *
      * @return string configured service id
      */
-    private function configurePlugin(ContainerBuilder $container, $serviceId, $pluginName, array $pluginConfig): string
+    private function configurePlugin(ContainerBuilder $container, string $serviceId, string $pluginName, array $pluginConfig): string
     {
         $pluginServiceId = $serviceId.'.plugin.'.$pluginName;
 
@@ -572,7 +556,7 @@ class HttplugExtension extends Extension
         return $pluginServiceId;
     }
 
-    private function configureVcrPlugin(ContainerBuilder $container, array $config, $prefix): array
+    private function configureVcrPlugin(ContainerBuilder $container, array $config, string $prefix): array
     {
         $recorder = $config['recorder'];
         $recorderId = in_array($recorder, ['filesystem', 'in_memory']) ? 'httplug.plugin.vcr.recorder.'.$recorder : $recorder;

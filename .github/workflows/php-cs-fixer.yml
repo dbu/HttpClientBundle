@@ -17,6 +17,6 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v3"
       - name: "PHP-CS-Fixer"
-        uses: "docker://oskarstark/php-cs-fixer-ga:2.19.0"
+        uses: "docker://oskarstark/php-cs-fixer-ga:3.26.0"
         with:
           args: --diff --dry-run

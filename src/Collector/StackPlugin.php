@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Http\HttplugBundle\Collector;
 
-use Exception;
 use Http\Client\Common\Plugin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,29 +20,11 @@ class StackPlugin implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var string
-     */
-    private $client;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
-     * @param string $client
-     */
-    public function __construct(Collector $collector, Formatter $formatter, $client)
-    {
-        $this->collector = $collector;
-        $this->formatter = $formatter;
-        $this->client = $client;
+    public function __construct(
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly string $client,
+    ) {
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
@@ -59,7 +40,7 @@ class StackPlugin implements Plugin
             return $response;
         };
 
-        $onRejected = function (Exception $exception) use ($stack) {
+        $onRejected = function (\Exception $exception) use ($stack): void {
             $stack->setResponse($this->formatter->formatException($exception));
             $stack->setFailed(true);
 

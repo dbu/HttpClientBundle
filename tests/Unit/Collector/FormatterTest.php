@@ -17,20 +17,11 @@ use PHPUnit\Framework\TestCase;
 
 class FormatterTest extends TestCase
 {
-    /**
-     * @var MessageFormatter&MockObject
-     */
-    private $formatter;
+    private MessageFormatter&MockObject $formatter;
 
-    /**
-     * @var CurlCommandFormatter&MockObject
-     */
-    private $curlFormatter;
+    private CurlCommandFormatter&MockObject $curlFormatter;
 
-    /**
-     * @var Formatter
-     */
-    private $subject;
+    private Formatter $subject;
 
     public function setUp(): void
     {

@@ -13,19 +13,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BuzzFactory implements ClientFactory
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(private readonly ResponseFactoryInterface $responseFactory)
     {
-        $this->responseFactory = $responseFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists('Buzz\Client\FileGetContents')) {
@@ -43,9 +34,9 @@ class BuzzFactory implements ClientFactory
         $resolver = new OptionsResolver();
 
         $resolver->setDefaults([
-          'timeout' => 5,
-          'verify' => true,
-          'proxy' => null,
+            'timeout' => 5,
+            'verify' => true,
+            'proxy' => null,
         ]);
 
         $resolver->setAllowedTypes('timeout', 'int');

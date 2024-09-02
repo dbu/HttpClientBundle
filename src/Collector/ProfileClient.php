@@ -26,30 +26,9 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
 {
     use VersionBridgeClient;
 
-    /**
-     * @var ClientInterface|HttpAsyncClient
-     */
-    private $client;
+    private ClientInterface&HttpAsyncClient $client;
 
-    /**
-     * @var Collector
-     */
-    private $collector;
-
-    /**
-     * @var Formatter
-     */
-    private $formatter;
-
-    /**
-     * @var Stopwatch
-     */
-    private $stopwatch;
-
-    /**
-     * @var array
-     */
-    private $eventNames = [];
+    private array $eventNames = [];
 
     private const STOPWATCH_CATEGORY = 'httplug';
 
@@ -57,16 +36,17 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
      * @param ClientInterface|HttpAsyncClient $client The client to profile. Client must implement HttpClient or
      *                                                HttpAsyncClient interface.
      */
-    public function __construct($client, Collector $collector, Formatter $formatter, Stopwatch $stopwatch)
-    {
+    public function __construct(
+        $client,
+        private readonly Collector $collector,
+        private readonly Formatter $formatter,
+        private readonly Stopwatch $stopwatch
+    ) {
         if (!($client instanceof ClientInterface && $client instanceof HttpAsyncClient)) {
             $client = new FlexibleHttpClient($client);
         }
 
         $this->client = $client;
-        $this->collector = $collector;
-        $this->formatter = $formatter;
-        $this->stopwatch = $stopwatch;
     }
 
     public function sendAsyncRequest(RequestInterface $request)
@@ -74,8 +54,8 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
         $activateStack = true;
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
-            //When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
-            //we create our own stack and activate it!
+            // When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
+            // we create our own stack and activate it!
             $stack = new Stack('Default', $this->formatter->formatRequest($request));
             $this->collector->addStack($stack);
             $this->collector->activateStack($stack);
@@ -92,7 +72,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
             return $response;
         };
 
-        $onRejected = function (\Exception $exception) use ($event, $stack) {
+        $onRejected = function (\Exception $exception) use ($event, $stack): void {
             $this->collectExceptionInformations($exception, $event, $stack);
             $event->stop();
 
@@ -109,7 +89,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
             throw $e;
         } finally {
             if ($activateStack) {
-                //We only activate the stack when created by the StackPlugin.
+                // We only activate the stack when created by the StackPlugin.
                 $this->collector->activateStack($stack);
             }
         }
@@ -119,8 +99,8 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
     {
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
-            //When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
-            //we create our own stack but don't activate it.
+            // When using a discovered client not wrapped in a PluginClient, we don't have a stack from StackPlugin. So
+            // we create our own stack but don't activate it.
             $stack = new Stack('Default', $this->formatter->formatRequest($request));
             $this->collector->addStack($stack);
         }
@@ -156,7 +136,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
 
     private function collectResponseInformations(RequestInterface $request, ResponseInterface $response, StopwatchEvent $event, Stack $stack): void
     {
-        $stack->setDuration($event->getDuration());
+        $stack->setDuration((int) $event->getDuration());
         $stack->setResponseCode($response->getStatusCode());
         $stack->setClientResponse($this->formatter->formatResponseForRequest($response, $request));
     }
@@ -167,7 +147,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
             $this->collectResponseInformations($exception->getRequest(), $exception->getResponse(), $event, $stack);
         }
 
-        $stack->setDuration($event->getDuration());
+        $stack->setDuration((int) $event->getDuration());
         $stack->setClientException($this->formatter->formatException($exception));
     }
 

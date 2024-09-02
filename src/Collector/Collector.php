@@ -21,34 +21,26 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
  */
 class Collector extends DataCollector
 {
-    /**
-     * @var Stack|null
-     */
-    private $activeStack;
+    private ?Stack $activeStack = null;
 
-    /**
-     * @var int|null
-     */
-    private $capturedBodyLength;
-
-    public function __construct(?int $capturedBodyLength = null)
+    public function __construct(private ?int $capturedBodyLength = null)
     {
         $this->reset();
-        $this->capturedBodyLength = $capturedBodyLength;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function __wakeup(): void
+    {
+        $this->capturedBodyLength = null;
+
+        parent::__wakeup();
+    }
+
     public function reset(): void
     {
         $this->data['stacks'] = [];
         $this->activeStack = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'httplug';
@@ -97,9 +89,7 @@ class Collector extends DataCollector
      */
     public function getChildrenStacks(Stack $parent)
     {
-        return array_filter($this->data['stacks'], function (Stack $stack) use ($parent) {
-            return $stack->getParent() === $parent;
-        });
+        return array_filter($this->data['stacks'], fn (Stack $stack) => $stack->getParent() === $parent);
     }
 
     /**
@@ -115,9 +105,7 @@ class Collector extends DataCollector
      */
     public function getSuccessfulStacks()
     {
-        return array_filter($this->data['stacks'], function (Stack $stack) {
-            return !$stack->isFailed();
-        });
+        return array_filter($this->data['stacks'], fn (Stack $stack) => !$stack->isFailed());
     }
 
     /**
@@ -125,9 +113,7 @@ class Collector extends DataCollector
      */
     public function getFailedStacks()
     {
-        return array_filter($this->data['stacks'], function (Stack $stack) {
-            return $stack->isFailed();
-        });
+        return array_filter($this->data['stacks'], fn (Stack $stack) => $stack->isFailed());
     }
 
     /**
@@ -135,39 +121,27 @@ class Collector extends DataCollector
      */
     public function getClients()
     {
-        $stacks = array_filter($this->data['stacks'], function (Stack $stack) {
-            return null === $stack->getParent();
-        });
+        $stacks = array_filter($this->data['stacks'], fn (Stack $stack) => null === $stack->getParent());
 
-        return array_unique(array_map(function (Stack $stack) {
-            return $stack->getClient();
-        }, $stacks));
+        return array_unique(array_map(fn (Stack $stack) => $stack->getClient(), $stacks));
     }
 
     /**
-     * @param $client
-     *
      * @return Stack[]
      */
     public function getClientRootStacks($client)
     {
-        return array_filter($this->data['stacks'], function (Stack $stack) use ($client) {
-            return $stack->getClient() == $client && null == $stack->getParent();
-        });
+        return array_filter($this->data['stacks'], fn (Stack $stack) => $stack->getClient() == $client && null == $stack->getParent());
     }
 
     /**
      * Count all messages for a client.
      *
-     * @param $client
-     *
      * @return int
      */
     public function countClientMessages($client)
     {
-        return array_sum(array_map(function (Stack $stack) {
-            return $this->countStackMessages($stack);
-        }, $this->getClientRootStacks($client)));
+        return array_sum(array_map(fn (Stack $stack) => $this->countStackMessages($stack), $this->getClientRootStacks($client)));
     }
 
     /**
@@ -177,9 +151,7 @@ class Collector extends DataCollector
      */
     private function countStackMessages(Stack $stack)
     {
-        return 1 + array_sum(array_map(function (Stack $child) {
-            return $this->countStackMessages($child);
-        }, $this->getChildrenStacks($stack)));
+        return 1 + array_sum(array_map(fn (Stack $child) => $this->countStackMessages($child), $this->getChildrenStacks($stack)));
     }
 
     /**
@@ -187,14 +159,9 @@ class Collector extends DataCollector
      */
     public function getTotalDuration()
     {
-        return array_reduce($this->data['stacks'], function ($carry, Stack $stack) {
-            return $carry + $stack->getDuration();
-        }, 0);
+        return array_reduce($this->data['stacks'], fn ($carry, Stack $stack) => $carry + $stack->getDuration(), 0);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(Request $request, Response $response, $exception = null): void
     {
         // We do not need to collect any data from the Symfony Request and Response

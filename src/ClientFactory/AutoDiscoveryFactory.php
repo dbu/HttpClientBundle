@@ -13,9 +13,6 @@ use Http\Discovery\Psr18ClientDiscovery;
  */
 class AutoDiscoveryFactory implements ClientFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         return Psr18ClientDiscovery::find();

@@ -14,25 +14,12 @@ use Symfony\Component\HttpClient\HttplugClient;
  */
 class SymfonyFactory implements ClientFactory
 {
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    /**
-     * @var StreamFactoryInterface
-     */
-    private $streamFactory;
-
-    public function __construct(ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory)
-    {
-        $this->responseFactory = $responseFactory;
-        $this->streamFactory = $streamFactory;
+    public function __construct(
+        private readonly ResponseFactoryInterface $responseFactory,
+        private readonly StreamFactoryInterface $streamFactory
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createClient(array $config = [])
     {
         if (!class_exists(HttplugClient::class)) {

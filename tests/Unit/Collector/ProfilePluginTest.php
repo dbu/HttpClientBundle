@@ -23,41 +23,21 @@ use Psr\Http\Message\ResponseInterface;
 
 class ProfilePluginTest extends TestCase
 {
-    /**
-     * @var Plugin
-     */
-    private $plugin;
+    private Plugin $plugin;
 
-    /**
-     * @var RequestInterface
-     */
-    private $request;
+    private RequestInterface $request;
 
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
+    private ResponseInterface $response;
 
-    /**
-     * @var Promise
-     */
-    private $fulfilledPromise;
+    private Promise $fulfilledPromise;
 
-    /**
-     * @var TransferException
-     */
-    private $exception;
+    private TransferException $exception;
 
-    /**
-     * @var Promise
-     */
-    private $rejectedPromise;
+    private Promise $rejectedPromise;
 
-    /**
-     * @var ProfilePlugin
-     */
-    private $subject;
-    private $collector;
+    private ProfilePlugin $subject;
+
+    private Collector $collector;
 
     public function setUp(): void
     {
@@ -76,9 +56,7 @@ class ProfilePluginTest extends TestCase
 
         $this->plugin
             ->method('handleRequest')
-            ->willReturnCallback(function ($request, $next, $first) {
-                return $next($request);
-            })
+            ->willReturnCallback(fn ($request, $next, $first) => $next($request))
         ;
 
         $messageFormatter
@@ -108,30 +86,24 @@ class ProfilePluginTest extends TestCase
             ->with($this->request)
         ;
 
-        $this->subject->handleRequest($this->request, function () {
-            return $this->fulfilledPromise;
-        }, function (): void {
+        $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
     }
 
     public function testProfileIsInitialized(): void
     {
-        $this->subject->handleRequest($this->request, function () {
-            return $this->fulfilledPromise;
-        }, function (): void {
+        $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
 
         $activeStack = $this->collector->getActiveStack();
         $this->assertCount(1, $activeStack->getProfiles());
         $profile = $activeStack->getProfiles()[0];
-        $this->assertEquals(get_class($this->plugin), $profile->getPlugin());
+        $this->assertEquals($this->plugin::class, $profile->getPlugin());
     }
 
     public function testCollectRequestInformations(): void
     {
-        $this->subject->handleRequest($this->request, function () {
-            return $this->fulfilledPromise;
-        }, function (): void {
+        $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
 
         $activeStack = $this->collector->getActiveStack();
@@ -142,9 +114,7 @@ class ProfilePluginTest extends TestCase
 
     public function testOnFulfilled(): void
     {
-        $promise = $this->subject->handleRequest($this->request, function () {
-            return $this->fulfilledPromise;
-        }, function (): void {
+        $promise = $this->subject->handleRequest($this->request, fn () => $this->fulfilledPromise, function (): void {
         });
 
         $this->assertEquals($this->response, $promise->wait());
@@ -157,9 +127,7 @@ class ProfilePluginTest extends TestCase
 
     public function testOnRejected(): void
     {
-        $promise = $this->subject->handleRequest($this->request, function () {
-            return $this->rejectedPromise;
-        }, function (): void {
+        $promise = $this->subject->handleRequest($this->request, fn () => $this->rejectedPromise, function (): void {
         });
 
         $activeStack = $this->collector->getActiveStack();
