@@ -34,7 +34,7 @@ jobs:
           - dependencies: "php-http/guzzle7-adapter"
             php-version: "8.2"
             symfony-deprecations-helper: "weak"
-          - dependencies: "php-http/guzzle7-adapter php-http/throttle-plugin"
+          - dependencies: "php-http/guzzle7-adapter"
             php-version: "8.3"
             symfony-deprecations-helper: "weak"
 
