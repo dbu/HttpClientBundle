@@ -14,6 +14,8 @@ use Psr\Http\Client\ClientInterface;
  * we can use the web debug toolbar for clients found with the discovery.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class ConfiguredClientsStrategy implements DiscoveryStrategy
 {

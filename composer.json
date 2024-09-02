@@ -42,29 +42,30 @@
         "symfony/options-resolver": "^6.4 || ^7.1"
     },
     "conflict": {
+        "kriswallsmith/buzz": "<0.17",
         "php-http/guzzle6-adapter": "<1.1",
         "php-http/cache-plugin": "<1.7",
         "php-http/curl-client": "<2.0",
         "php-http/socket-client": "<2.0",
-        "kriswallsmith/buzz": "<0.17",
-        "php-http/react-adapter": "<3.0"
+        "php-http/react-adapter": "<3.0",
+        "php-http/throttle-plugin": "<1.1"
     },
     "require-dev": {
         "guzzlehttp/psr7": "^1.7 || ^2.0",
         "matthiasnoback/symfony-config-test": "^5.2",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.0 || ^5.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.3.1 || ^5.0",
         "nyholm/nsa": "^1.1",
         "nyholm/psr7": "^1.2.1",
         "php-http/cache-plugin": "^1.7",
         "php-http/mock-client": "^1.2",
         "php-http/promise": "^1.0",
+        "php-http/throttle-plugin": "^1.1",
         "phpunit/phpunit": "^9",
         "symfony/browser-kit": "^6.4 || ^7.1",
         "symfony/cache": "^6.4 || ^7.1",
         "symfony/dom-crawler": "^6.4 || ^7.1",
         "symfony/framework-bundle": "^6.4 || ^7.1",
         "symfony/http-foundation": "^6.4 || ^7.1",
-        "symfony/phpunit-bridge": "^7.1",
         "symfony/stopwatch": "^6.4 || ^7.1",
         "symfony/twig-bundle": "^6.4 || ^7.1",
         "symfony/web-profiler-bundle": "^6.4 || ^7.1",
@@ -97,7 +98,7 @@
     },
     "prefer-stable": false,
     "scripts": {
-        "test": "vendor/bin/simple-phpunit",
-        "test-ci": "vendor/bin/simple-phpunit --coverage-text --coverage-clover=build/coverage.xml"
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
     }
 }

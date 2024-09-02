@@ -80,7 +80,7 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
 
     public function testClientPlugins(): void
     {
-        $this->load([
+        $config = [
             'clients' => [
                 'acme' => [
                     'factory' => 'httplug.factory.curl',
@@ -132,6 +132,11 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                             ],
                         ],
                         [
+                            'query_defaults' => [
+                                'parameters' => ['locale' => 'en'],
+                            ],
+                        ],
+                        [
                             'request_seekable_body' => [
                                 'use_file_buffer' => true,
                             ],
@@ -140,8 +145,8 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                             'response_seekable_body' => true,
                         ],
                         [
-                            'query_defaults' => [
-                                'parameters' => ['locale' => 'en'],
+                            'throttle' => [
+                                'name' => 'limiter.test',
                             ],
                         ],
                         [
@@ -166,7 +171,9 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                     ],
                 ],
             ],
-        ]);
+        ];
+
+        $this->load($config);
 
         $plugins = [
             'httplug.client.acme.plugin.decoder',
@@ -179,9 +186,10 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
             'httplug.client.acme.plugin.header_defaults',
             'httplug.client.acme.plugin.header_set',
             'httplug.client.acme.plugin.header_remove',
+            'httplug.client.acme.plugin.query_defaults',
             'httplug.client.acme.plugin.request_seekable_body',
             'httplug.client.acme.plugin.response_seekable_body',
-            'httplug.client.acme.plugin.query_defaults',
+            'httplug.client.acme.plugin.throttle',
             'httplug.client.acme.authentication.my_basic',
             'httplug.client.acme.plugin.cache',
             'httplug.client.acme.plugin.error',

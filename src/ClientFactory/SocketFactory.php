@@ -8,6 +8,8 @@ use Http\Client\Socket\Client;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class SocketFactory implements ClientFactory
 {

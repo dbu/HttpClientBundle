@@ -16,6 +16,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
+ *
+ * @final
  */
 class ProfileClientFactory implements ClientFactory
 {
@@ -28,7 +30,7 @@ class ProfileClientFactory implements ClientFactory
         ClientFactory|callable $factory,
         private readonly Collector $collector,
         private readonly Formatter $formatter,
-        private readonly Stopwatch $stopwatch
+        private readonly Stopwatch $stopwatch,
     ) {
         $this->factory = $factory;
     }

@@ -13,6 +13,8 @@ use Twig\TwigFilter;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class HttpMessageMarkupExtension extends AbstractExtension
 {

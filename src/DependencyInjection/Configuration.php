@@ -31,6 +31,8 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  *
  * @author David Buchmann <mail@davidbu.ch>
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class Configuration implements ConfigurationInterface
 {
@@ -593,7 +595,7 @@ class Configuration implements ConfigurationInterface
         ->end();
         // End stopwatch plugin
 
-        $error = $children->arrayNode('error')
+        $children->arrayNode('error')
             ->canBeEnabled()
             ->addDefaultsIfNotSet()
             ->children()
@@ -601,6 +603,30 @@ class Configuration implements ConfigurationInterface
             ->end()
         ->end();
         // End error plugin
+
+        $children->arrayNode('throttle')
+            ->canBeEnabled()
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('name')
+                    ->isRequired()
+                    ->info('Rate limiter service name from symfony/rate-limiter configuration. E.g. for a rate limiter http_client you specify limiter.http_client here')
+                ->end()
+                ->scalarNode('key')
+                    ->defaultNull()
+                    ->info('Key to avoid sharing this rate limiter with other clients or other services. You can use the name of the client for example.')
+                ->end()
+                ->integerNode('tokens')
+                    ->defaultValue(1)
+                    ->info('How many tokens spending per request')
+                ->end()
+                ->floatNode('max_time')
+                    ->defaultNull()
+                    ->info('Maximum accepted waiting time in seconds')
+                ->end()
+            ->end()
+        ->end();
+        // End throttle plugin
     }
 
     /**

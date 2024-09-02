@@ -10,6 +10,8 @@ use Http\Discovery\Psr18ClientDiscovery;
  * Use auto discovery to find a HTTP client.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class AutoDiscoveryFactory implements ClientFactory
 {
