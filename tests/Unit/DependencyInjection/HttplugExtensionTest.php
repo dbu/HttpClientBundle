@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Http\HttplugBundle\Tests\Unit\DependencyInjection;
 
 use Http\Adapter\Guzzle7\Client;
+use Http\Client\Common\Plugin\ThrottlePlugin;
 use Http\Client\Plugin\Vcr\Recorder\InMemoryRecorder;
 use Http\HttplugBundle\Collector\PluginClientFactoryListener;
 use Http\HttplugBundle\DependencyInjection\HttplugExtension;
@@ -80,7 +81,7 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
 
     public function testClientPlugins(): void
     {
-        $this->load([
+        $config = [
             'clients' => [
                 'acme' => [
                     'factory' => 'httplug.factory.curl',
@@ -132,17 +133,17 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                             ],
                         ],
                         [
+                            'query_defaults' => [
+                                'parameters' => ['locale' => 'en'],
+                            ],
+                        ],
+                        [
                             'request_seekable_body' => [
                                 'use_file_buffer' => true,
                             ],
                         ],
                         [
                             'response_seekable_body' => true,
-                        ],
-                        [
-                            'query_defaults' => [
-                                'parameters' => ['locale' => 'en'],
-                            ],
                         ],
                         [
                             'authentication' => [
@@ -166,7 +167,16 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
                     ],
                 ],
             ],
-        ]);
+        ];
+        if (class_exists(ThrottlePlugin::class)) {
+            $config['clients']['acme']['plugins'][] = [
+                'throttle' => [
+                    'name' => 'limiter.test',
+                ],
+            ];
+        }
+
+        $this->load($config);
 
         $plugins = [
             'httplug.client.acme.plugin.decoder',
@@ -179,13 +189,16 @@ class HttplugExtensionTest extends AbstractExtensionTestCase
             'httplug.client.acme.plugin.header_defaults',
             'httplug.client.acme.plugin.header_set',
             'httplug.client.acme.plugin.header_remove',
+            'httplug.client.acme.plugin.query_defaults',
             'httplug.client.acme.plugin.request_seekable_body',
             'httplug.client.acme.plugin.response_seekable_body',
-            'httplug.client.acme.plugin.query_defaults',
             'httplug.client.acme.authentication.my_basic',
             'httplug.client.acme.plugin.cache',
             'httplug.client.acme.plugin.error',
         ];
+        if (\class_exists(ThrottlePlugin::class)) {
+            $plugins[] = 'httplug.client.acme.plugin.throttle';
+        }
         $pluginReferences = array_map(fn ($id) => new Reference($id), $plugins);
 
         $this->assertContainerBuilderHasService('httplug.client.acme');

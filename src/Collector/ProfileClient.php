@@ -21,6 +21,8 @@ use Symfony\Component\Stopwatch\StopwatchEvent;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
+ *
+ * @final
  */
 class ProfileClient implements ClientInterface, HttpAsyncClient
 {
@@ -40,7 +42,7 @@ class ProfileClient implements ClientInterface, HttpAsyncClient
         $client,
         private readonly Collector $collector,
         private readonly Formatter $formatter,
-        private readonly Stopwatch $stopwatch
+        private readonly Stopwatch $stopwatch,
     ) {
         if (!($client instanceof ClientInterface && $client instanceof HttpAsyncClient)) {
             $client = new FlexibleHttpClient($client);

@@ -10,12 +10,14 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class CurlFactory implements ClientFactory
 {
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
-        private readonly StreamFactoryInterface $streamFactory
+        private readonly StreamFactoryInterface $streamFactory,
     ) {
     }
 

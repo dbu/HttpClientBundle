@@ -15,6 +15,8 @@ use Psr\Http\Message\ResponseInterface;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
+ *
+ * @final
  */
 class ProfilePlugin implements Plugin
 {
@@ -74,7 +76,7 @@ class ProfilePlugin implements Plugin
         RequestInterface $request,
         Profile $profile,
         \Exception $exception,
-        Stack $stack
+        Stack $stack,
     ): void {
         $profile->setFailed(true);
         $profile->setResponse($this->formatter->formatException($exception));

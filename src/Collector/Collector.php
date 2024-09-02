@@ -18,6 +18,8 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
+ *
+ * @final
  */
 class Collector extends DataCollector
 {

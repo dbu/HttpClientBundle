@@ -28,6 +28,9 @@
         <service id="httplug.plugin.stopwatch" class="Http\Client\Common\Plugin\StopwatchPlugin" public="false" abstract="true">
             <argument />
         </service>
+        <service id="httplug.plugin.throttle" class="Http\Client\Common\Plugin\ThrottlePlugin" public="false" abstract="true">
+            <argument />
+        </service>
 
         <!-- client specific plugin definition prototypes -->
 

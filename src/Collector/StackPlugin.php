@@ -15,6 +15,8 @@ use Psr\Http\Message\ResponseInterface;
  * @author Fabien Bourigault <bourigaultfabien@gmail.com>
  *
  * @internal
+ *
+ * @final
  */
 class StackPlugin implements Plugin
 {

@@ -10,6 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
+ * @final
  */
 class BuzzFactory implements ClientFactory
 {

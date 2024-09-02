@@ -34,7 +34,7 @@ jobs:
           - dependencies: "php-http/guzzle7-adapter"
             php-version: "8.2"
             symfony-deprecations-helper: "weak"
-          - dependencies: "php-http/guzzle7-adapter"
+          - dependencies: "php-http/guzzle7-adapter php-http/throttle-plugin"
             php-version: "8.3"
             symfony-deprecations-helper: "weak"
 
@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v4"
         with:
           fetch-depth: 2
 
@@ -79,6 +79,7 @@ jobs:
           php-version: "${{ matrix.php-version }}"
           coverage: "pcov"
           ini-values: "zend.assertions=1"
+          tools: "flex"
 
       - name: "Enforce using stable dependencies"
         run: "composer config minimum-stability stable"
@@ -86,11 +87,10 @@ jobs:
 
       - name: "Add dependencies and enable flex"
         run: |
-          composer require --no-update symfony/flex ${{ matrix.dependencies }}
-          composer config --no-plugins allow-plugins.symfony/flex true
+          composer require --no-update ${{ matrix.dependencies }}
 
       - name: "Install dependencies with Composer"
-        uses: "ramsey/composer-install@v2"
+        uses: "ramsey/composer-install@v3"
         with:
           dependency-versions: "${{ matrix.dependency-versions }}"
           composer-options: "${{ matrix.composer-options }}"

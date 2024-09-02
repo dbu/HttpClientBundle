@@ -23,7 +23,7 @@ final class PluginClientFactory
     public function __construct(
         private readonly Collector $collector,
         private readonly Formatter $formatter,
-        private readonly Stopwatch $stopwatch
+        private readonly Stopwatch $stopwatch,
     ) {
     }
 
