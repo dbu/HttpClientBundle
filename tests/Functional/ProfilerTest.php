@@ -28,7 +28,7 @@ class ProfilerTest extends WebTestCase
         $client->request('GET', '/_profiler/latest?panel=httplug');
         $content = $client->getResponse()->getContent();
         $this->assertStringContainsString(<<<HTML
-            <div class="label httplug-stack-header-target"><span class="httplug-scheme">https://</span><span class="httplug-host">jsonplaceholder.typicode.com</span><span class="httplug-target">/posts/1</span></div>
-        HTML, $content);
+        <div class="label httplug-stack-header-target"><span class="httplug-scheme">https://</span><span class="httplug-host">jsonplaceholder.typicode.com</span><span class="httplug-target">/posts/1</span></div>
+        HTML, str_replace(" ", "", $content));
     }
 }
