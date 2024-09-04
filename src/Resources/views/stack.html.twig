@@ -7,16 +7,14 @@
         {% endif %}
         <span class="label httplug-method httplug-method-{{ stack.requestMethod|lower }}">{{ stack.requestMethod }}</span>
     </div>
-    {% apply spaceless %}
-        <div class="label httplug-stack-header-target">
-            <span class="httplug-scheme">{{ stack.requestScheme }}://</span>
-            <span class="httplug-host">{{ stack.requestHost }}</span>
-            {% if stack.requestPort not in [null, 80, 443] %}
-                <span class="httplug-port">:{{ stack.requestPort }}</span>
-            {% endif %}
-            <span class="httplug-target">{{ (stack.requestTarget|default('/') starts with '/' ? '' : '/')  ~ stack.requestTarget }}</span>
-        </div>
-    {% endapply %}
+    <div class="label httplug-stack-header-target">
+        <span class="httplug-scheme">{{ stack.requestScheme }}://</span>
+        <span class="httplug-host">{{ stack.requestHost }}</span>
+        {% if stack.requestPort not in [null, 80, 443] %}
+            <span class="httplug-port">:{{ stack.requestPort }}</span>
+        {% endif %}
+        <span class="httplug-target">{{ (stack.requestTarget|default('/') starts with '/' ? '' : '/')  ~ stack.requestTarget }}</span>
+    </div>
     <div>
         <span class="label httplug-duration">{{ stack.duration|number_format }} ms</span>
         {% if stack.responseCode >= 400 and stack.responseCode <= 599 %}
