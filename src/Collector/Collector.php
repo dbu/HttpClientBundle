@@ -54,7 +54,7 @@ final class Collector extends DataCollector
     /**
      * Mark the stack as active. If a stack was already active, use it as parent for our stack.
      */
-    public function activateStack(Stack $stack)
+    public function activateStack(Stack $stack): void
     {
         if (null !== $this->activeStack) {
             $stack->setParent($this->activeStack);
@@ -66,20 +66,17 @@ final class Collector extends DataCollector
     /**
      * Mark the stack as inactive.
      */
-    public function deactivateStack(Stack $stack)
+    public function deactivateStack(Stack $stack): void
     {
         $this->activeStack = $stack->getParent();
     }
 
-    /**
-     * @return Stack|null
-     */
-    public function getActiveStack()
+    public function getActiveStack(): ?Stack
     {
         return $this->activeStack;
     }
 
-    public function addStack(Stack $stack)
+    public function addStack(Stack $stack): void
     {
         $this->data['stacks'][] = $stack;
     }
@@ -87,15 +84,15 @@ final class Collector extends DataCollector
     /**
      * @return Stack[]
      */
-    public function getChildrenStacks(Stack $parent)
+    public function getChildrenStacks(Stack $parent): array
     {
-        return array_filter($this->data['stacks'], fn (Stack $stack) => $stack->getParent() === $parent);
+        return array_filter($this->data['stacks'], static fn (Stack $stack) => $stack->getParent() === $parent);
     }
 
     /**
      * @return Stack[]
      */
-    public function getStacks()
+    public function getStacks(): array
     {
         return $this->data['stacks'];
     }
@@ -103,63 +100,56 @@ final class Collector extends DataCollector
     /**
      * @return Stack[]
      */
-    public function getSuccessfulStacks()
+    public function getSuccessfulStacks(): array
     {
-        return array_filter($this->data['stacks'], fn (Stack $stack) => !$stack->isFailed());
+        return array_filter($this->data['stacks'], static fn (Stack $stack) => !$stack->isFailed());
     }
 
     /**
      * @return Stack[]
      */
-    public function getFailedStacks()
+    public function getFailedStacks(): array
     {
-        return array_filter($this->data['stacks'], fn (Stack $stack) => $stack->isFailed());
+        return array_filter($this->data['stacks'], static fn (Stack $stack) => $stack->isFailed());
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getClients()
+    public function getClients(): array
     {
-        $stacks = array_filter($this->data['stacks'], fn (Stack $stack) => null === $stack->getParent());
+        $stacks = array_filter($this->data['stacks'], static fn (Stack $stack) => null === $stack->getParent());
 
-        return array_unique(array_map(fn (Stack $stack) => $stack->getClient(), $stacks));
+        return array_unique(array_map(static fn (Stack $stack) => $stack->getClient(), $stacks));
     }
 
     /**
      * @return Stack[]
      */
-    public function getClientRootStacks($client)
+    public function getClientRootStacks(string $client): array
     {
-        return array_filter($this->data['stacks'], fn (Stack $stack) => $stack->getClient() == $client && null == $stack->getParent());
+        return array_filter($this->data['stacks'], static fn (Stack $stack) => $stack->getClient() == $client && null == $stack->getParent());
     }
 
     /**
      * Count all messages for a client.
-     *
-     * @return int
      */
-    public function countClientMessages($client)
+    public function countClientMessages(string $client): int
     {
         return array_sum(array_map(fn (Stack $stack) => $this->countStackMessages($stack), $this->getClientRootStacks($client)));
     }
 
     /**
      * Recursively count message in stack.
-     *
-     * @return int
      */
-    private function countStackMessages(Stack $stack)
+    private function countStackMessages(Stack $stack): int
     {
         return 1 + array_sum(array_map(fn (Stack $child) => $this->countStackMessages($child), $this->getChildrenStacks($stack)));
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalDuration()
+    public function getTotalDuration(): int
     {
-        return array_reduce($this->data['stacks'], fn ($carry, Stack $stack) => $carry + $stack->getDuration(), 0);
+        return array_reduce($this->data['stacks'], static fn ($carry, Stack $stack) => $carry + $stack->getDuration(), 0);
     }
 
     public function collect(Request $request, Response $response, $exception = null): void

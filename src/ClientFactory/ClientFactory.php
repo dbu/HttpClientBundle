@@ -13,8 +13,6 @@ interface ClientFactory
 {
     /**
      * Input an array of configuration to be able to create a ClientInterface.
-     *
-     * @return ClientInterface
      */
-    public function createClient(array $config = []);
+    public function createClient(array $config = []): ClientInterface;
 }

@@ -27,9 +27,9 @@ final class HttpMessageMarkupExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('httplug_markup', $this->markup(...), ['is_safe' => ['html']]),
@@ -74,7 +74,7 @@ final class HttpMessageMarkupExtension extends AbstractExtension
         return $this->dumper->dump($this->cloner->cloneVar($body));
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'httplug.message_markup';
     }

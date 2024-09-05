@@ -39,9 +39,10 @@ final class FormatterTest extends TestCase
             ->expects($this->once())
             ->method('formatRequest')
             ->with($this->identicalTo($request))
+            ->willReturn('foo')
         ;
 
-        $this->subject->formatRequest($request);
+        $this->assertSame('foo', $this->subject->formatRequest($request));
     }
 
     public function testFormatResponseForRequest(): void
@@ -56,9 +57,10 @@ final class FormatterTest extends TestCase
             ->expects($this->once())
             ->method('formatResponseForRequest')
             ->with($this->identicalTo($response), $this->identicalTo($request))
+            ->willReturn('foo')
         ;
 
-        $subject->formatResponseForRequest($response, $request);
+        $this->assertSame('foo', $subject->formatResponseForRequest($response, $request));
     }
 
     /**
@@ -72,9 +74,10 @@ final class FormatterTest extends TestCase
             ->expects($this->once())
             ->method('formatResponse')
             ->with($this->identicalTo($response))
+            ->willReturn('foo')
         ;
 
-        $this->subject->formatResponse($response);
+        $this->assertSame('foo', $this->subject->formatResponse($response));
     }
 
     public function testFormatHttpException(): void

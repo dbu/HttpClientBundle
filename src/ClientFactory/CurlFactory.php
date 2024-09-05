@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Http\HttplugBundle\ClientFactory;
 
 use Http\Client\Curl\Client;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -19,7 +20,7 @@ final class CurlFactory implements ClientFactory
     ) {
     }
 
-    public function createClient(array $config = [])
+    public function createClient(array $config = []): ClientInterface
     {
         if (!class_exists('Http\Client\Curl\Client')) {
             throw new \LogicException('To use the Curl client you need to install the "php-http/curl-client" package.');

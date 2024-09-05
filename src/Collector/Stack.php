@@ -52,28 +52,22 @@ final class Stack
     ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getClient()
+    public function getClient(): string
     {
         return $this->client;
     }
 
-    /**
-     * @return Stack|null
-     */
-    public function getParent()
+    public function getParent(): ?Stack
     {
         return $this->parent;
     }
 
-    public function setParent(self $parent)
+    public function setParent(self $parent): void
     {
         $this->parent = $parent;
     }
 
-    public function addProfile(Profile $profile)
+    public function addProfile(Profile $profile): void
     {
         $this->profiles[] = $profile;
     }
@@ -81,175 +75,112 @@ final class Stack
     /**
      * @return Profile[]
      */
-    public function getProfiles()
+    public function getProfiles(): array
     {
         return $this->profiles;
     }
 
-    /**
-     * @return string
-     */
-    public function getRequest()
+    public function getRequest(): string
     {
         return $this->request;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getResponse()
+    public function getResponse(): ?string
     {
         return $this->response;
     }
 
-    /**
-     * @param string $response
-     */
-    public function setResponse($response)
+    public function setResponse(string $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFailed()
+    public function isFailed(): bool
     {
         return $this->failed;
     }
 
-    /**
-     * @param bool $failed
-     */
-    public function setFailed($failed)
+    public function setFailed(bool $failed): void
     {
         $this->failed = $failed;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRequestTarget()
+    public function getRequestTarget(): ?string
     {
         return $this->requestTarget;
     }
 
-    /**
-     * @param string $requestTarget
-     */
-    public function setRequestTarget($requestTarget)
+    public function setRequestTarget(string $requestTarget): void
     {
         $this->requestTarget = $requestTarget;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRequestMethod()
+    public function getRequestMethod(): ?string
     {
         return $this->requestMethod;
     }
 
-    /**
-     * @param string $requestMethod
-     */
-    public function setRequestMethod($requestMethod)
+    public function setRequestMethod(string $requestMethod): void
     {
         $this->requestMethod = $requestMethod;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getClientRequest()
+    public function getClientRequest(): ?string
     {
         return $this->clientRequest;
     }
 
-    /**
-     * @param string $clientRequest
-     */
-    public function setClientRequest($clientRequest)
+    public function setClientRequest(string $clientRequest): void
     {
         $this->clientRequest = $clientRequest;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getClientResponse()
+    public function getClientResponse(): ?string
     {
         return $this->clientResponse;
     }
 
-    /**
-     * @param string $clientResponse
-     */
-    public function setClientResponse($clientResponse)
+    public function setClientResponse(string $clientResponse): void
     {
         $this->clientResponse = $clientResponse;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getClientException()
+    public function getClientException(): ?string
     {
         return $this->clientException;
     }
 
-    /**
-     * @param string $clientException
-     */
-    public function setClientException($clientException)
+    public function setClientException(string $clientException): void
     {
         $this->clientException = $clientException;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getResponseCode()
+    public function getResponseCode(): ?int
     {
         return $this->responseCode;
     }
 
-    /**
-     * @param int $responseCode
-     */
-    public function setResponseCode($responseCode)
+    public function setResponseCode(int $responseCode): void
     {
         $this->responseCode = $responseCode;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRequestHost()
+    public function getRequestHost(): ?string
     {
         return $this->requestHost;
     }
 
-    /**
-     * @param string $requestHost
-     */
-    public function setRequestHost($requestHost)
+    public function setRequestHost(string $requestHost): void
     {
         $this->requestHost = $requestHost;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRequestScheme()
+    public function getRequestScheme(): ?string
     {
         return $this->requestScheme;
     }
 
-    /**
-     * @param string $requestScheme
-     */
-    public function setRequestScheme($requestScheme)
+    public function setRequestScheme(string $requestScheme): void
     {
         $this->requestScheme = $requestScheme;
     }
@@ -259,47 +190,32 @@ final class Stack
         return $this->requestPort;
     }
 
-    public function setRequestPort(?int $port)
+    public function setRequestPort(?int $port): void
     {
         $this->requestPort = $port;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration()
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    /**
-     * @param int $duration
-     */
-    public function setDuration($duration)
+    public function setDuration(int $duration): void
     {
         $this->duration = $duration;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCurlCommand()
+    public function getCurlCommand(): ?string
     {
         return $this->curlCommand;
     }
 
-    /**
-     * @param string $curlCommand
-     */
-    public function setCurlCommand($curlCommand)
+    public function setCurlCommand(string $curlCommand): void
     {
         $this->curlCommand = $curlCommand;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSlug()
+    public function getClientSlug(): string
     {
         return preg_replace('/[^a-zA-Z0-9_-]/u', '_', $this->client);
     }
