@@ -1,6 +1,0 @@
-httplug:
-    plugins:
-        cache:
-            cache_pool: my_cache_pool
-            config:
-                respect_cache_headers: true

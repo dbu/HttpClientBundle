@@ -7,6 +7,10 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 # 2.0.0 - (unreleased)
 
 - Increased min PHP version to 8.1
+- Removed the deprecated `httplug_markup` twig filter. Use `@Httplug/http_message.html.twig` template instead.
+- Removed deprecated configuration options:
+  - `toolbar`: Use `profiling` instead.
+  - `respect_cache_headers`: Use `respect_response_cache_directives` instead.
 - Removed the deprecated `Http\HttplugBundle\ClientFactory\PluginClientFactory`. Use `Http\Client\Common\PluginClientFactory` instead.
 - Fixed a deprecation when creating a `HttpMethodsClient` via `http_methods_client: true`. Only PSR-17 factories are now passed as constructor arguments.
 - Changed the default stream factory argument for the cache plugin. This now requires a PSR-17 StreamFactoryInterface instance.

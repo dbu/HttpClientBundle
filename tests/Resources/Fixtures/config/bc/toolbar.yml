@@ -1,5 +1,0 @@
-httplug:
-    toolbar:
-        enabled: true
-        formatter: null
-        captured_body_length: 0
