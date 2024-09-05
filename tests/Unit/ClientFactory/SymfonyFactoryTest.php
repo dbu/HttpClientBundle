@@ -13,7 +13,7 @@ use Symfony\Component\HttpClient\HttplugClient;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class SymfonyFactoryTest extends TestCase
+final class SymfonyFactoryTest extends TestCase
 {
     public function testCreateClient(): void
     {

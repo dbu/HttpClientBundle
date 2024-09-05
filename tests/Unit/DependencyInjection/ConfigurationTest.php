@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 /**
  * @author David Buchmann <mail@davidbu.ch>
  */
-class ConfigurationTest extends AbstractExtensionConfigurationTestCase
+final class ConfigurationTest extends AbstractExtensionConfigurationTestCase
 {
     private array $emptyConfig = [
         'default_client_autowiring' => true,

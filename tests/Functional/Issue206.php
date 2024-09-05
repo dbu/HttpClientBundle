@@ -11,7 +11,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class Issue206 extends WebTestCase
+final class Issue206 extends WebTestCase
 {
     public function testCustomClientDoesNotCauseException(): void
     {

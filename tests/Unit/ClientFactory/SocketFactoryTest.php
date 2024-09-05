@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class SocketFactoryTest extends TestCase
+final class SocketFactoryTest extends TestCase
 {
     public function testCreateClient(): void
     {

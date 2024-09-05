@@ -15,7 +15,7 @@ use Http\Message\Formatter\SimpleFormatter;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class FormatterTest extends TestCase
+final class FormatterTest extends TestCase
 {
     private MessageFormatter&MockObject $formatter;
 

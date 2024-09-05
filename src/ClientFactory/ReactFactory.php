@@ -8,10 +8,8 @@ use Http\Adapter\React\Client;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
- *
- * @final
  */
-class ReactFactory implements ClientFactory
+final class ReactFactory implements ClientFactory
 {
     public function createClient(array $config = [])
     {

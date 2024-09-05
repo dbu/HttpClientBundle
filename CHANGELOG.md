@@ -5,6 +5,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 # Version 2
 
 # 2.0.0 - (unreleased)
+
 - Increased min PHP version to 8.1
 - Removed the deprecated `Http\HttplugBundle\ClientFactory\PluginClientFactory`. Use `Http\Client\Common\PluginClientFactory` instead.
 - Fixed a deprecation when creating a `HttpMethodsClient` via `http_methods_client: true`. Only PSR-17 factories are now passed as constructor arguments.
@@ -18,6 +19,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 - Changed the type of `httplug.client.default` to `ClientInterface` instead of `HttpClient`
 - Removed the `DummyClient` interface
 - Removed the `Http\Client\HttpClient` alias use the `Psr\Http\Client\ClientInterface` typehint in your services for autowiring.
+- Changed classes marked as `@final` to be actually `final`. If you extended any of those, instead implement interfaces or decorate the class rather than extending it. Open an issue if you think a class needs to be made non-final to discuss what we should do.
 
 # Version 1
 

@@ -14,37 +14,21 @@ use Http\Message\Formatter as MessageFormatter;
 use Http\Message\Formatter\SimpleFormatter;
 use Http\Promise\FulfilledPromise;
 use Http\Promise\RejectedPromise;
-use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class StackPluginTest extends TestCase
+final class StackPluginTest extends TestCase
 {
-    /**
-     * @var Collector
-     */
-    private $collector;
+    private Collector $collector;
 
-    /**
-     * @var RequestInterface
-     */
-    private $request;
+    private RequestInterface $request;
 
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
+    private ResponseInterface $response;
 
-    /**
-     * @var \Exception
-     */
-    private $exception;
+    private \Exception $exception;
 
-    /**
-     * @var StackPlugin
-     */
-    private $subject;
+    private StackPlugin $subject;
 
     public function setUp(): void
     {
@@ -128,11 +112,7 @@ class StackPluginTest extends TestCase
 
     public function testOnError(): void
     {
-        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
-            $this->expectException(\DivisionByZeroError::class);
-        } else {
-            $this->expectException(Warning::class);
-        }
+        $this->expectException(\DivisionByZeroError::class);
 
         $next = fn () => 2 / 0;
 

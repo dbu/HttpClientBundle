@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class ReactFactoryTest extends TestCase
+final class ReactFactoryTest extends TestCase
 {
     public function testCreateClient(): void
     {

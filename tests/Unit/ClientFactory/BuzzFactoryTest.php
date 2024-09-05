@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class BuzzFactoryTest extends TestCase
+final class BuzzFactoryTest extends TestCase
 {
     public function testCreateClient(): void
     {

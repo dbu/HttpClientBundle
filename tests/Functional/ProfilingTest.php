@@ -22,7 +22,7 @@ use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class ProfilingTest extends TestCase
+final class ProfilingTest extends TestCase
 {
     private Collector $collector;
 
