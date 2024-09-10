@@ -6,7 +6,6 @@ namespace Http\HttplugBundle\Tests\Unit\DependencyInjection;
 
 use Http\Adapter\Guzzle7\Client;
 use Http\Client\Plugin\Vcr\Recorder\InMemoryRecorder;
-use Http\HttplugBundle\Collector\PluginClientFactoryListener;
 use Http\HttplugBundle\DependencyInjection\HttplugExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Psr\Http\Client\ClientInterface;
@@ -204,28 +203,6 @@ final class HttplugExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('httplug.client.mock');
     }
 
-    /**
-     * @group legacy
-     */
-    public function testNoProfilingWhenToolbarIsDisabled(): void
-    {
-        $this->load(
-            [
-                'toolbar' => [
-                    'enabled' => false,
-                ],
-                'clients' => [
-                    'acme' => [
-                        'factory' => 'httplug.factory.curl',
-                        'plugins' => ['foo'],
-                    ],
-                ],
-            ]
-        );
-
-        $this->verifyProfilingDisabled();
-    }
-
     public function testNoProfilingWhenNotInDebugMode(): void
     {
         $this->setParameter('kernel.debug', false);
@@ -241,29 +218,6 @@ final class HttplugExtensionTest extends AbstractExtensionTestCase
         );
 
         $this->verifyProfilingDisabled();
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testProfilingWhenToolbarIsSpecificallyOn(): void
-    {
-        $this->setParameter('kernel.debug', false);
-        $this->load(
-            [
-                'toolbar' => [
-                    'enabled' => true,
-                ],
-                'clients' => [
-                    'acme' => [
-                        'factory' => 'httplug.factory.curl',
-                        'plugins' => ['foo'],
-                    ],
-                ],
-            ]
-        );
-
-        $this->assertContainerBuilderHasService(PluginClientFactoryListener::class);
     }
 
     public function testOverrideProfilingFormatter(): void
