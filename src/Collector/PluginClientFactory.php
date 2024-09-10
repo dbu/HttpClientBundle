@@ -28,18 +28,15 @@ final class PluginClientFactory
     }
 
     /**
-     * @param ClientInterface|HttpAsyncClient $client
-     * @param Plugin[]                        $plugins
-     * @param array{client_name?: string}     $options
+     * @param Plugin[]                    $plugins
+     * @param array{client_name?: string} $options
      *
-     *        - client_name: to give client a name which may be used when displaying client information like in
-     *         the HTTPlugBundle profiler
+     * Options:
+     * - client_name: to give client a name which may be used when displaying client information like in the HTTPlugBundle profiler
      *
      * @see PluginClient constructor for PluginClient specific $options.
-     *
-     * @return PluginClient
      */
-    public function createClient($client, array $plugins = [], array $options = [])
+    public function createClient(HttpAsyncClient|ClientInterface $client, array $plugins = [], array $options = []): PluginClient
     {
         $plugins = array_map(fn (Plugin $plugin) => new ProfilePlugin($plugin, $this->collector, $this->formatter), $plugins);
 

@@ -26,7 +26,7 @@ final class PluginClientFactoryListener implements EventSubscriberInterface
     /**
      * Make sure to profile clients created using PluginClientFactory.
      */
-    public function onEvent(Event $e)
+    public function onEvent(Event $e): void
     {
         DefaultPluginClientFactory::setFactory($this->factory->createClient(...));
     }

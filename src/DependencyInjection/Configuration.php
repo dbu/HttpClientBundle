@@ -34,19 +34,14 @@ use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
  */
 final class Configuration implements ConfigurationInterface
 {
-    /**
-     * Whether to use the debug mode.
-     *
-     * @see https://github.com/doctrine/DoctrineBundle/blob/v1.5.2/DependencyInjection/Configuration.php#L31-L41
-     */
-    private bool $debug;
-
-    /**
-     * @param bool $debug
-     */
-    public function __construct($debug)
-    {
-        $this->debug = (bool) $debug;
+    public function __construct(
+        /**
+         * Whether to use the debug mode.
+         *
+         * @see https://github.com/doctrine/DoctrineBundle/blob/v1.5.2/DependencyInjection/Configuration.php#L31-L41
+         */
+        private bool $debug,
+    ) {
     }
 
     public function getConfigTreeBuilder(): TreeBuilder

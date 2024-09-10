@@ -12,7 +12,7 @@ use Http\HttplugBundle\Collector\Collector;
 use Http\HttplugBundle\Collector\Formatter;
 use Http\HttplugBundle\Collector\ProfilePlugin;
 use Http\HttplugBundle\Collector\Stack;
-use Http\Message\Formatter as MessageFormatter;
+use Http\Message\Formatter\CurlCommandFormatter;
 use Http\Message\Formatter\SimpleFormatter;
 use Http\Promise\FulfilledPromise;
 use Http\Promise\Promise;
@@ -43,8 +43,8 @@ final class ProfilePluginTest extends TestCase
     public function setUp(): void
     {
         $this->collector = new Collector();
-        $messageFormatter = $this->createMock(SimpleFormatter::class);
-        $formatter = new Formatter($messageFormatter, $this->createMock(MessageFormatter::class));
+        $messageFormatter = new SimpleFormatter();
+        $formatter = new Formatter($messageFormatter, new CurlCommandFormatter());
 
         $this->plugin = $this->createMock(Plugin::class);
         $this->request = new Request('GET', '/');
@@ -58,18 +58,6 @@ final class ProfilePluginTest extends TestCase
         $this->plugin
             ->method('handleRequest')
             ->willReturnCallback(fn ($request, $next, $first) => $next($request))
-        ;
-
-        $messageFormatter
-            ->method('formatRequest')
-            ->with($this->identicalTo($this->request))
-            ->willReturn('FormattedRequest')
-        ;
-
-        $messageFormatter
-            ->method('formatResponseForRequest')
-            ->with($this->identicalTo($this->response), $this->identicalTo($this->request))
-            ->willReturn('FormattedResponse')
         ;
 
         $this->subject = new ProfilePlugin(
@@ -110,7 +98,7 @@ final class ProfilePluginTest extends TestCase
         $activeStack = $this->collector->getActiveStack();
         $this->assertCount(1, $activeStack->getProfiles());
         $profile = $activeStack->getProfiles()[0];
-        $this->assertEquals('FormattedRequest', $profile->getRequest());
+        $this->assertEquals('GET / 1.1', $profile->getRequest());
     }
 
     public function testOnFulfilled(): void
@@ -123,7 +111,7 @@ final class ProfilePluginTest extends TestCase
         $activeStack = $this->collector->getActiveStack();
         $this->assertCount(1, $activeStack->getProfiles());
         $profile = $activeStack->getProfiles()[0];
-        $this->assertEquals('FormattedResponse', $profile->getResponse());
+        $this->assertEquals('200 OK 1.1', $profile->getResponse());
     }
 
     public function testOnRejected(): void

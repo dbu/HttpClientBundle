@@ -28,7 +28,7 @@ final class ConfiguredClientsStrategy implements DiscoveryStrategy
         Psr18ClientDiscovery::clearCache();
     }
 
-    public static function getCandidates($type)
+    public static function getCandidates($type): array
     {
         if (ClientInterface::class === $type && null !== self::$client) {
             return [['class' => fn () => self::$client]];

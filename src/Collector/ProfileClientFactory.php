@@ -33,7 +33,7 @@ final class ProfileClientFactory implements ClientFactory
         $this->factory = $factory;
     }
 
-    public function createClient(array $config = [])
+    public function createClient(array $config = []): ClientInterface
     {
         $client = is_callable($this->factory) ? call_user_func($this->factory, $config) : $this->factory->createClient($config);
 

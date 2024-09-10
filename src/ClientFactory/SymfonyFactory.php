@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Http\HttplugBundle\ClientFactory;
 
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Symfony\Component\HttpClient\HttpClient;
@@ -20,7 +21,7 @@ final class SymfonyFactory implements ClientFactory
     ) {
     }
 
-    public function createClient(array $config = [])
+    public function createClient(array $config = []): ClientInterface
     {
         if (!class_exists(HttplugClient::class)) {
             throw new \LogicException('To use the Symfony client you need to install the "symfony/http-client" package.');

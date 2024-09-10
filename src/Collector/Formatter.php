@@ -27,12 +27,7 @@ final class Formatter implements MessageFormatter
     ) {
     }
 
-    /**
-     * Formats an exception.
-     *
-     * @return string
-     */
-    public function formatException(\Throwable $exception)
+    public function formatException(\Throwable $exception): string
     {
         if ($exception instanceof HttpException) {
             return $this->formatter->formatResponseForRequest($exception->getResponse(), $exception->getRequest());
@@ -45,12 +40,12 @@ final class Formatter implements MessageFormatter
         return sprintf('Unexpected exception of type "%s": %s', $exception::class, $exception->getMessage());
     }
 
-    public function formatRequest(RequestInterface $request)
+    public function formatRequest(RequestInterface $request): string
     {
         return $this->formatter->formatRequest($request);
     }
 
-    public function formatResponseForRequest(ResponseInterface $response, RequestInterface $request)
+    public function formatResponseForRequest(ResponseInterface $response, RequestInterface $request): string
     {
         if (method_exists($this->formatter, 'formatResponseForRequest')) {
             return $this->formatter->formatResponseForRequest($response, $request);
@@ -59,17 +54,15 @@ final class Formatter implements MessageFormatter
         return $this->formatter->formatResponse($response);
     }
 
-    public function formatResponse(ResponseInterface $response)
+    public function formatResponse(ResponseInterface $response): string
     {
         return $this->formatter->formatResponse($response);
     }
 
     /**
-     * Format a RequestInterface as a cURL command.
-     *
-     * @return string
+     * Format the RequestInterface as a cURL command that can be copied to the command line.
      */
-    public function formatAsCurlCommand(RequestInterface $request)
+    public function formatAsCurlCommand(RequestInterface $request): string
     {
         return $this->curlFormatter->formatRequest($request);
     }

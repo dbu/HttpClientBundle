@@ -8,6 +8,7 @@ use Http\Client\Common\FlexibleHttpClient;
 use Http\Client\Common\VersionBridgeClient;
 use Http\Client\Exception\HttpException;
 use Http\Client\HttpAsyncClient;
+use Http\Promise\Promise;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -32,12 +33,8 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
 
     private const STOPWATCH_CATEGORY = 'httplug';
 
-    /**
-     * @param ClientInterface|HttpAsyncClient $client The client to profile. Client must implement HttpClient or
-     *                                                HttpAsyncClient interface.
-     */
     public function __construct(
-        $client,
+        HttpAsyncClient|ClientInterface $client,
         private readonly Collector $collector,
         private readonly Formatter $formatter,
         private readonly Stopwatch $stopwatch,
@@ -49,7 +46,7 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
         $this->client = $client;
     }
 
-    public function sendAsyncRequest(RequestInterface $request)
+    public function sendAsyncRequest(RequestInterface $request): Promise
     {
         $activateStack = true;
         $stack = $this->collector->getActiveStack();
@@ -62,18 +59,18 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
             $activateStack = false;
         }
 
-        $this->collectRequestInformations($request, $stack);
+        $this->collectRequestInformation($request, $stack);
         $event = $this->stopwatch->start($this->getStopwatchEventName($request), self::STOPWATCH_CATEGORY);
 
         $onFulfilled = function (ResponseInterface $response) use ($request, $event, $stack) {
-            $this->collectResponseInformations($request, $response, $event, $stack);
+            $this->collectResponseInformation($request, $response, $event, $stack);
             $event->stop();
 
             return $response;
         };
 
         $onRejected = function (\Exception $exception) use ($event, $stack): void {
-            $this->collectExceptionInformations($exception, $event, $stack);
+            $this->collectExceptionInformation($exception, $event, $stack);
             $event->stop();
 
             throw $exception;
@@ -95,7 +92,7 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
         }
     }
 
-    protected function doSendRequest(RequestInterface $request)
+    protected function doSendRequest(RequestInterface $request): ResponseInterface
     {
         $stack = $this->collector->getActiveStack();
         if (null === $stack) {
@@ -105,16 +102,16 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
             $this->collector->addStack($stack);
         }
 
-        $this->collectRequestInformations($request, $stack);
+        $this->collectRequestInformation($request, $stack);
         $event = $this->stopwatch->start($this->getStopwatchEventName($request), self::STOPWATCH_CATEGORY);
 
         try {
             $response = $this->client->sendRequest($request);
-            $this->collectResponseInformations($request, $response, $event, $stack);
+            $this->collectResponseInformation($request, $response, $event, $stack);
 
             return $response;
         } catch (\Throwable $e) {
-            $this->collectExceptionInformations($e, $event, $stack);
+            $this->collectExceptionInformation($e, $event, $stack);
 
             throw $e;
         } finally {
@@ -122,7 +119,7 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
         }
     }
 
-    private function collectRequestInformations(RequestInterface $request, Stack $stack): void
+    private function collectRequestInformation(RequestInterface $request, Stack $stack): void
     {
         $uri = $request->getUri();
         $stack->setRequestTarget($request->getRequestTarget());
@@ -134,17 +131,17 @@ final class ProfileClient implements ClientInterface, HttpAsyncClient
         $stack->setCurlCommand($this->formatter->formatAsCurlCommand($request));
     }
 
-    private function collectResponseInformations(RequestInterface $request, ResponseInterface $response, StopwatchEvent $event, Stack $stack): void
+    private function collectResponseInformation(RequestInterface $request, ResponseInterface $response, StopwatchEvent $event, Stack $stack): void
     {
         $stack->setDuration((int) $event->getDuration());
         $stack->setResponseCode($response->getStatusCode());
         $stack->setClientResponse($this->formatter->formatResponseForRequest($response, $request));
     }
 
-    private function collectExceptionInformations(\Throwable $exception, StopwatchEvent $event, Stack $stack): void
+    private function collectExceptionInformation(\Throwable $exception, StopwatchEvent $event, Stack $stack): void
     {
         if ($exception instanceof HttpException) {
-            $this->collectResponseInformations($exception->getRequest(), $exception->getResponse(), $event, $stack);
+            $this->collectResponseInformation($exception->getRequest(), $exception->getResponse(), $event, $stack);
         }
 
         $stack->setDuration((int) $event->getDuration());

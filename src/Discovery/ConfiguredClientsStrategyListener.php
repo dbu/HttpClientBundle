@@ -15,7 +15,7 @@ final class ConfiguredClientsStrategyListener implements EventSubscriberInterfac
     /**
      * Make sure to use the custom strategy.
      */
-    public function onEvent()
+    public function onEvent(): void
     {
         Psr18ClientDiscovery::prependStrategy(ConfiguredClientsStrategy::class);
     }

@@ -12,7 +12,7 @@ use Http\HttplugBundle\Collector\Collector;
 use Http\HttplugBundle\Collector\Formatter;
 use Http\HttplugBundle\Collector\ProfileClient;
 use Http\HttplugBundle\Collector\Stack;
-use Http\Message\Formatter as MessageFormatter;
+use Http\Message\Formatter\CurlCommandFormatter;
 use Http\Message\Formatter\SimpleFormatter;
 use Http\Promise\FulfilledPromise;
 use Http\Promise\Promise;
@@ -45,8 +45,8 @@ final class ProfileClientTest extends TestCase
 
     public function setUp(): void
     {
-        $messageFormatter = $this->createMock(SimpleFormatter::class);
-        $formatter = new Formatter($messageFormatter, $this->createMock(MessageFormatter::class));
+        $messageFormatter = new SimpleFormatter();
+        $formatter = new Formatter($messageFormatter, new CurlCommandFormatter());
         $this->collector = new Collector();
         $stopwatch = $this->createMock(Stopwatch::class);
 
@@ -61,12 +61,6 @@ final class ProfileClientTest extends TestCase
         $exception = new \Exception('test');
         $this->fulfilledPromise = new FulfilledPromise($this->response);
         $this->rejectedPromise = new RejectedPromise($exception);
-
-        $messageFormatter
-            ->method('formatResponseForRequest')
-            ->with($this->response, $this->request)
-            ->willReturn('FormattedResponse')
-        ;
 
         $stopwatch
             ->method('start')
@@ -99,7 +93,7 @@ final class ProfileClientTest extends TestCase
         $this->assertEquals('https', $activeStack->getRequestScheme());
     }
 
-    public function testSendRequestTypeError()
+    public function testSendRequestTypeError(): void
     {
         $this->client
             ->expects($this->once())
@@ -151,7 +145,7 @@ final class ProfileClientTest extends TestCase
         $this->assertInstanceOf(Stack::class, $activeStack);
         $this->assertEquals(42, $activeStack->getDuration());
         $this->assertEquals(200, $activeStack->getResponseCode());
-        $this->assertEquals('FormattedResponse', $activeStack->getClientResponse());
+        $this->assertEquals('200 OK 1.1', $activeStack->getClientResponse());
     }
 
     public function testOnRejected(): void

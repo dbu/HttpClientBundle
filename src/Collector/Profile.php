@@ -23,58 +23,37 @@ final class Profile
     {
     }
 
-    /**
-     * @return string
-     */
-    public function getPlugin()
+    public function getPlugin(): string
     {
         return $this->plugin;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRequest()
+    public function getRequest(): ?string
     {
         return $this->request;
     }
 
-    /**
-     * @param string $request
-     */
-    public function setRequest($request)
+    public function setRequest(string $request): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getResponse()
+    public function getResponse(): ?string
     {
         return $this->response;
     }
 
-    /**
-     * @param string $response
-     */
-    public function setResponse($response)
+    public function setResponse(string $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return bool
-     */
-    public function isFailed()
+    public function isFailed(): bool
     {
         return $this->failed;
     }
 
-    /**
-     * @param bool $failed
-     */
-    public function setFailed($failed)
+    public function setFailed(bool $failed): void
     {
         $this->failed = $failed;
     }

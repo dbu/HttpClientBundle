@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Http\HttplugBundle\ClientFactory;
 
 use Buzz\Client\FileGetContents;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,7 @@ final class BuzzFactory implements ClientFactory
     {
     }
 
-    public function createClient(array $config = [])
+    public function createClient(array $config = []): ClientInterface
     {
         if (!class_exists('Buzz\Client\FileGetContents')) {
             throw new \LogicException('To use the Buzz you need to install the "kriswallsmith/buzz" package.');
@@ -29,7 +30,7 @@ final class BuzzFactory implements ClientFactory
     /**
      * Get options to configure the Buzz client.
      */
-    private function getOptions(array $config = [])
+    private function getOptions(array $config = []): array
     {
         $resolver = new OptionsResolver();
 
