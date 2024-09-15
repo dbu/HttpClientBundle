@@ -5,6 +5,7 @@
 
     <services>
         <service id="httplug.client.mock" class="Http\Mock\Client" public="true" />
+        <service id="Http\Mock\Client" alias="httplug.client.mock" public="true"/>
         <service id="httplug.factory.mock" class="Http\HttplugBundle\ClientFactory\MockFactory" public="false">
             <call method="setClient">
                 <argument type="service" id="httplug.client.mock" />

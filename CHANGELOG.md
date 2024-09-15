@@ -25,6 +25,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 - Removed the `Http\Client\HttpClient` alias use the `Psr\Http\Client\ClientInterface` typehint in your services for autowiring.
 - Changed classes marked as `@final` to be actually `final`. If you extended any of those, instead implement interfaces or decorate the class rather than extending it. Open an issue if you think a class needs to be made non-final to discuss what we should do.
 - Added return type declaration to `Http\HttplugBundle\ClientFactory\ClientFactory::createClient`
+- Added interface name alias for the `Http\Mock\Client` and all PSR17 factories to help with autowiring.
 
 # Version 1
 
