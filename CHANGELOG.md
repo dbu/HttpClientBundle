@@ -4,7 +4,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 2
 
-# 2.0.0 - (unreleased)
+# 2.0.0 - 2024-09-16
 
 - Increased min PHP version to 8.1
 - Removed the deprecated `httplug_markup` twig filter. Use `@Httplug/http_message.html.twig` template instead.
@@ -16,7 +16,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 - Changed the default stream factory argument for the cache plugin. This now requires a PSR-17 StreamFactoryInterface instance.
 - Creating a client using the `BuzzFactory` no longer accepts `verify_peer` and `verify_host` config options. Only a boolean `verify` flag is accepted, covering both previous options.
 - Removed support of deprecated PHP-HTTP factories, only PSR-17 factories are now supported and used.
-- Removed `message_factory`, `uri_factory`, and `stream_factory` classes config option. You can configure your own factories via psr17_*_factory classes config
+- Removed `message_factory`, `uri_factory`, and `stream_factory` classes config option. You can configure your own factories via `psr17_*_factory` classes config
 - Removed support for guzzle5-adapter
 - Removed support for Symfony versions <5.4
 - Changed the return type of `ClientFactory` to return a `ClientInterface` instead of `ClientInterface|HttpClient`
