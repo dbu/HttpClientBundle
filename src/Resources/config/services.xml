@@ -41,21 +41,32 @@
         <service id="httplug.psr17_request_factory.default" class="Psr\Http\Message\RequestFactoryInterface">
             <factory class="Http\Discovery\Psr17FactoryDiscovery" method="findRequestFactory" />
         </service>
+        <service id="Psr\Http\Message\RequestFactoryInterface" alias="httplug.psr17_request_factory.default" public="true"/>
+
         <service id="httplug.psr17_response_factory.default" class="Psr\Http\Message\ResponseFactoryInterface">
             <factory class="Http\Discovery\Psr17FactoryDiscovery" method="findResponseFactory" />
         </service>
+        <service id="Psr\Http\Message\ResponseFactoryInterface" alias="httplug.psr17_response_factory.default" public="true"/>
+
         <service id="httplug.psr17_stream_factory.default" class="Psr\Http\Message\StreamFactoryInterface">
             <factory class="Http\Discovery\Psr17FactoryDiscovery" method="findStreamFactory" />
         </service>
+        <service id="Psr\Http\Message\StreamFactoryInterface" alias="httplug.psr17_stream_factory.default" public="true"/>
+
         <service id="httplug.psr17_uri_factory.default" class="Psr\Http\Message\UriFactoryInterface">
             <factory class="Http\Discovery\Psr17FactoryDiscovery" method="findUrlFactory" />
         </service>
+        <service id="Psr\Http\Message\UriFactoryInterface" alias="httplug.psr17_uri_factory.default" public="true"/>
+
         <service id="httplug.psr17_uploaded_file_factory.default" class="Psr\Http\Message\UploadedFileFactoryInterface">
             <factory class="Http\Discovery\Psr17FactoryDiscovery" method="findUploadedFileFactory" />
         </service>
+        <service id="Psr\Http\Message\UploadedFileFactoryInterface" alias="httplug.psr17_uploaded_file_factory.default" public="true"/>
+
         <service id="httplug.psr17_server_request_factory.default" class="Psr\Http\Message\ServerRequestFactoryInterface">
             <factory class="Http\Discovery\Psr17FactoryDiscovery" method="findServerRequestFactory" />
         </service>
+        <service id="Psr\Http\Message\ServerRequestFactoryInterface" alias="httplug.psr17_server_request_factory.default" public="true"/>
 
         <!-- PluginClientFactory -->
         <service id="Http\Client\Common\PluginClientFactory" class="Http\Client\Common\PluginClientFactory" public="false" />
