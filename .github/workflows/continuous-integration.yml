@@ -37,6 +37,9 @@ jobs:
           - dependencies: "php-http/guzzle7-adapter"
             php-version: "8.3"
             symfony-deprecations-helper: "weak"
+          - dependencies: "php-http/guzzle7-adapter"
+            php-version: "8.4"
+            symfony-deprecations-helper: "weak"
 
           # Test with httplug 2.x clients
           - dependencies: "php-http/guzzle7-adapter php-http/curl-client:^2.0.0 php-http/vcr-plugin:^1.0@dev php-http/socket-client:^2.0"
