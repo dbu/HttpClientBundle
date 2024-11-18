@@ -427,17 +427,29 @@ final class HttplugExtension extends Extension
 
             switch ($pluginName) {
                 case 'reference':
-                    $plugins[] = $pluginConfig['id'];
+                    $plugins[] = new Reference($pluginConfig['id']);
                     break;
                 case 'authentication':
-                    $plugins = array_merge($plugins, $this->configureAuthentication($container, $pluginConfig, $serviceId.'.authentication'));
+                    $plugins = array_merge(
+                        $plugins,
+                        array_map(
+                            fn ($id) => new Reference($id),
+                            $this->configureAuthentication($container, $pluginConfig, $serviceId.'.authentication')
+                        )
+                    );
                     break;
                 case 'vcr':
                     $this->useVcrPlugin = true;
-                    $plugins = array_merge($plugins, $this->configureVcrPlugin($container, $pluginConfig, $serviceId.'.vcr'));
+                    $plugins = array_merge(
+                        $plugins,
+                        array_map(
+                            fn ($id) => new Reference($id),
+                            $this->configureVcrPlugin($container, $pluginConfig, $serviceId.'.vcr'),
+                        ),
+                    );
                     break;
                 default:
-                    $plugins[] = $this->configurePlugin($container, $serviceId, $pluginName, $pluginConfig);
+                    $plugins[] = new Reference($this->configurePlugin($container, $serviceId, $pluginName, $pluginConfig));
             }
         }
 
@@ -456,12 +468,7 @@ final class HttplugExtension extends Extension
             ->register($serviceId, PluginClient::class)
             ->setFactory([new Reference(PluginClientFactory::class), 'createClient'])
             ->addArgument(new Reference($serviceId.'.client'))
-            ->addArgument(
-                array_map(
-                    fn ($id) => new Reference($id),
-                    $plugins
-                )
-            )
+            ->addArgument($plugins)
             ->addArgument([
                 'client_name' => $clientName,
             ])
