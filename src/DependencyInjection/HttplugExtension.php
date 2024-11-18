@@ -16,6 +16,7 @@ use Http\Client\Common\PluginClientFactory;
 use Http\Client\HttpAsyncClient;
 use Http\Client\Plugin\Vcr\RecordPlugin;
 use Http\Client\Plugin\Vcr\ReplayPlugin;
+use Http\HttplugBundle\PluginConfigurator;
 use Http\Message\Authentication\BasicAuth;
 use Http\Message\Authentication\Bearer;
 use Http\Message\Authentication\Header;
@@ -428,6 +429,18 @@ final class HttplugExtension extends Extension
             switch ($pluginName) {
                 case 'reference':
                     $plugins[] = new Reference($pluginConfig['id']);
+                    break;
+                case 'configurator':
+                    if (!is_a($pluginConfig['id'], PluginConfigurator::class, true)) {
+                        throw new \LogicException(sprintf('The plugin "%s" is not a valid PluginConfigurator.', $pluginConfig['id']));
+                    }
+
+                    $config = $pluginConfig['id']::getConfigTreeBuilder()->buildTree()->finalize($pluginConfig['config']);
+
+                    $definition = new Definition(null, [$config]);
+                    $definition->setFactory([new Reference($pluginConfig['id']), 'create']);
+
+                    $plugins[] = $definition;
                     break;
                 case 'authentication':
                     $plugins = array_merge(

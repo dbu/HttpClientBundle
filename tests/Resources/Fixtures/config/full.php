@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Http\HttplugBundle\Tests\Resources\CustomPluginConfigurator;
+
 $container->loadFromExtension('httplug', [
     'default_client_autowiring' => false,
     'main_alias' => [
@@ -27,6 +29,14 @@ $container->loadFromExtension('httplug', [
             'http_methods_client' => true,
             'plugins' => [
                 'httplug.plugin.redirect',
+                [
+                    'configurator' => [
+                        'id' => CustomPluginConfigurator::class,
+                        'config' => [
+                            'name' => 'foo',
+                        ],
+                    ],
+                ],
                 [
                     'add_host' => [
                         'host' => 'http://localhost',

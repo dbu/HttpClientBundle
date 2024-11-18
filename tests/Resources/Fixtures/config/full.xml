@@ -23,6 +23,13 @@
         <client name="test" factory="httplug.factory.guzzle7" http-methods-client="true">
             <plugin>httplug.plugin.redirect</plugin>
             <plugin>
+                <configurator id="Http\HttplugBundle\Tests\Resources\CustomPluginConfigurator">
+                    <config>
+                        <name>foo</name>
+                    </config>
+                </configurator>
+            </plugin>
+            <plugin>
                 <add-host host="http://localhost"/>
             </plugin>
             <plugin>

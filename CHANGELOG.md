@@ -4,6 +4,10 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 2
 
+# 2.1.0
+
+- Added PluginConfigurator
+
 # 2.0.0 - 2024-09-16
 
 - Increased min PHP version to 8.1

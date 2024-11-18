@@ -7,6 +7,7 @@ namespace Http\HttplugBundle\Tests\Unit\DependencyInjection;
 use Http\Adapter\Guzzle7\Client;
 use Http\HttplugBundle\DependencyInjection\Configuration;
 use Http\HttplugBundle\DependencyInjection\HttplugExtension;
+use Http\HttplugBundle\Tests\Resources\CustomPluginConfigurator;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -153,6 +154,15 @@ final class ConfigurationTest extends AbstractExtensionConfigurationTestCase
                             'reference' => [
                                 'enabled' => true,
                                 'id' => 'httplug.plugin.redirect',
+                            ],
+                        ],
+                        [
+                            'configurator' => [
+                                'enabled' => true,
+                                'id' => CustomPluginConfigurator::class,
+                                'config' => [
+                                    'name' => 'foo',
+                                ],
                             ],
                         ],
                         [
