@@ -4,7 +4,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 # Version 2
 
-# 2.1.0
+# 2.1.0 - 2024-11-24
 
 - Added [PluginConfigurator](https://docs.php-http.org/en/latest/integrations/symfony-bundle.html#configure-a-custom-plugin)
 
