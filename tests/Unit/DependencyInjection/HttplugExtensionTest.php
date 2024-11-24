@@ -7,8 +7,10 @@ namespace Http\HttplugBundle\Tests\Unit\DependencyInjection;
 use Http\Adapter\Guzzle7\Client;
 use Http\Client\Plugin\Vcr\Recorder\InMemoryRecorder;
 use Http\HttplugBundle\DependencyInjection\HttplugExtension;
+use Http\HttplugBundle\Tests\Resources\CustomPluginConfigurator;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Psr\Http\Client\ClientInterface;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -200,6 +202,40 @@ final class HttplugExtensionTest extends AbstractExtensionTestCase
             $this->assertContainerBuilderHasService($id);
         }
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('httplug.client.acme', 1, $pluginReferences);
+        $this->assertContainerBuilderHasService('httplug.client.mock');
+    }
+
+    public function testPluginConfiguratorConfig(): void
+    {
+        $config = [
+            'clients' => [
+                'acme' => [
+                    'factory' => 'httplug.factory.curl',
+                    'plugins' => [
+                        [
+                            'configurator' => [
+                                'id' => CustomPluginConfigurator::class,
+                                'config' => [
+                                    'name' => 'foo',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->load($config);
+
+        $definition = new Definition(null, [
+            ['name' => 'foo'],
+        ]);
+        $definition->setFactory([CustomPluginConfigurator::class, 'create']);
+
+        $this->assertContainerBuilderHasService('httplug.client.acme');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('httplug.client.acme', 1, [
+            $definition,
+        ]);
         $this->assertContainerBuilderHasService('httplug.client.mock');
     }
 

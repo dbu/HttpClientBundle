@@ -22,6 +22,11 @@ httplug:
             plugins:
                 - 'httplug.plugin.redirect'
                 -
+                    configurator:
+                        id: Http\HttplugBundle\Tests\Resources\CustomPluginConfigurator
+                        config:
+                            name: foo
+                -
                     add_host:
                         host: http://localhost
                 -
